@@ -1,1 +1,1 @@
-# huiehackathon-team2
+# HuiE Hackathon - Team 2
