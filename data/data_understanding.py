@@ -5,7 +5,7 @@ import spacy
 # Data Load 
 df_test = pd.read_csv('data/raw/2020 Survey Data.csv')
 
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_trf')
 def entity_extraction(x):
     if x.isnan:
         return np.NaN

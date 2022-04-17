@@ -6,36 +6,30 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import spacy
 from annotated_text import annotated_text
+from st_aggrid import AgGrid
 
-# nlp = spacy.load('en_core_web_sm')
-# def entity_extraction(x):
-#     doc = nlp(x)
-#     tokens = [token.text for token in doc]
-#     entities = [(entity.text,entity.label_)for entity in doc.ents]
-#     inc = 0
-#     for ent in doc.ents:
-#         x = x.replace(str(ent), str(inc))
-#         inc += 1
-#     y = x.split()
-#     z = x
-#     for value in range(len(y)):
-#         try:
-#             if y[value].isnumeric() == True:
-#                 y[value] = entities[int(y[value])]
-#         except:
-#             next  
-#     return y
+# wordcloud = WordCloud(background_color = 'white').generate("List of many words many many many yes yes yes words no no possiubly yes")
+# st.image(wordcloud.to_array())
 
-# def post_entity_formatting(x):
-#     test = entity_extraction(x)
-#     for x in range(len(test)):
-#         if x > 0:
-#             if type(test[x]) != tuple:
-#                 test[x] = f" {test[x]}"
-#     return test
+# Page and Footer configurations
+st.set_page_config(
+     page_title="Team Tūī",
+     page_icon="🐦",
+     layout="wide",
+     initial_sidebar_state="expanded",
+)
+hide_streamlit_style = """
+	<style>
+	/* This is to hide Streamlit footer */
+	footer {visibility: hidden;}
+	</style>
+"""
+st.markdown("""<style>
+	/* This is to hide Streamlit footer */
+	footer {visibility: hidden;}
+	</style>""", unsafe_allow_html=True)
 
-
-
+# Completed
 def home():
     """The main home page exploring details and including a mass link of directories"""
     
@@ -97,24 +91,12 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         - https://www.youtube.com/watch?v=d0Fde3bCvZ0\n
         - https://www.nzbirds.com/birds/tui.html
         """)
-    
-
-    # wordcloud = WordCloud(background_color = 'white').generate("List of many words many many many yes yes yes words no no possiubly yes")
-    # st.image(wordcloud.to_array())
 
 def dashboard2020():
     st.write("Dashboard 2020")
-
-    test = post_entity_formatting("Person A works at Person B's Company")
-    
-    
-                
-    annotated_text(*test)
-    st.write(test)
     
 def dashboard2021():
     st.write("Dashboard 2021")
-    
 
 def yearcomparisons():
     st.write("Year Comparisons")
@@ -130,7 +112,6 @@ def nlpanalysis():
 
 def recommendations():
     st.write("Recommendations")
-
 
 def main():
     # base header
