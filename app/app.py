@@ -4,6 +4,37 @@ import pandas as pd
 import numpy as np
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import spacy
+from annotated_text import annotated_text
+
+# nlp = spacy.load('en_core_web_sm')
+# def entity_extraction(x):
+#     doc = nlp(x)
+#     tokens = [token.text for token in doc]
+#     entities = [(entity.text,entity.label_)for entity in doc.ents]
+#     inc = 0
+#     for ent in doc.ents:
+#         x = x.replace(str(ent), str(inc))
+#         inc += 1
+#     y = x.split()
+#     z = x
+#     for value in range(len(y)):
+#         try:
+#             if y[value].isnumeric() == True:
+#                 y[value] = entities[int(y[value])]
+#         except:
+#             next  
+#     return y
+
+# def post_entity_formatting(x):
+#     test = entity_extraction(x)
+#     for x in range(len(test)):
+#         if x > 0:
+#             if type(test[x]) != tuple:
+#                 test[x] = f" {test[x]}"
+#     return test
+
+
 
 def home():
     """The main home page exploring details and including a mass link of directories"""
@@ -73,8 +104,14 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 
 def dashboard2020():
     st.write("Dashboard 2020")
-    
 
+    test = post_entity_formatting("Person A works at Person B's Company")
+    
+    
+                
+    annotated_text(*test)
+    st.write(test)
+    
 def dashboard2021():
     st.write("Dashboard 2021")
     
