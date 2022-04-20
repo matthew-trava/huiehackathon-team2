@@ -7,9 +7,8 @@ import matplotlib.pyplot as plt
 import spacy
 from annotated_text import annotated_text
 from st_aggrid import AgGrid
-
-# wordcloud = WordCloud(background_color = 'white').generate("List of many words many many many yes yes yes words no no possiubly yes")
-# st.image(wordcloud.to_array())
+from nltk import word_tokenize
+from nltk.corpus import stopwords
 
 # Page and Footer configurations
 st.set_page_config(
@@ -28,6 +27,9 @@ st.markdown("""<style>
 	/* This is to hide Streamlit footer */
 	footer {visibility: hidden;}
 	</style>""", unsafe_allow_html=True)
+
+def get_text_data(df_path, column_list):
+    return pd.read_csv(df_path, usecols=column_list)
 
 # Completed
 def home():
