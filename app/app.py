@@ -1,14 +1,19 @@
 # Package Installations
+from matplotlib.figure import Figure
 import streamlit as st
 import pandas as pd
 import numpy as np
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import spacy
-from annotated_text import annotated_text
+# import spacy
+# from annotated_text import annotated_text
 from st_aggrid import AgGrid
-from nltk import word_tokenize
-from nltk.corpus import stopwords
+# from nltk import word_tokenize
+# from nltk.corpus import stopwords
+from streamlit_pandas_profiling import st_profile_report
+import pandas_profiling
+import plost
+
 
 # Page and Footer configurations
 st.set_page_config(
@@ -27,16 +32,21 @@ st.markdown("""<style>
 	/* This is to hide Streamlit footer */
 	footer {visibility: hidden;}
 	</style>""", unsafe_allow_html=True)
+    
+@st.cache
+def df_2020():
+    return pd.read_csv('data/processed/df_2020_processed.csv')
 
-def get_text_data(df_path, column_list):
-    return pd.read_csv(df_path, usecols=column_list)
+@st.cache
+def df_2021():
+    return pd.read_csv('data/raw/2021 Survey Data.csv')
+
+data_2020 = df_2020()
+data_2021 = df_2021()
 
 # Completed
 def home():
     """The main home page exploring details and including a mass link of directories"""
-    
-    #celebratory welcome
-    st.balloons()
 
     st.write(
         """### Welcome to Team Tūī's Hackathon submission!
@@ -96,24 +106,64 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 
 def dashboard2020():
     st.write("Dashboard 2020")
+    st.write("coming soon....")
+    # df_2020_raw = pd.read_csv('data/processed/df_2020_processed.csv')
+    # st.markdown('### Organisation Type Statistics')
+    # orgtype_columns = []
+    # region_columns = []
+    # for column in df_2020_raw.columns:
+    #     if column.startswith('orgtype') == True and 'other' not in column:
+    #         orgtype_columns.append(column)
+    #     if column.startswith('region') == True and 'other' not in column:
+    #         region_columns.append(column)
+
+    # orgtype_sums = []
+    # region_sums = []
+    # for column in orgtype_columns:
+    #     orgtype_sums.append(df_2020_raw[column].sum())
+    # for column in region_columns:
+    #     region_sums.append(df_2020_raw[column].sum())
+
+    # orgtype_columns = [typ.replace("orgtype: ","") for typ in orgtype_columns]
+    # options = st.multiselect('options', orgtype_columns)
+    # col1, col2 = st.columns([2,3])
+    # with col1:
+    #     st.metric('Charitable Trust', data_2020['orgtype: charitable'].sum())
+    #     # fig, ax = plt.subplots()
+    #     # ax.pie(x = [data_2020['orgtype: charitable'].sum(), data_2020['row hash'].count() - data_2020['orgtype: charitable'].sum()],
+    #     #     labels=['Charitable Trust', 'Not Charitable Trust'], autopct='%.0f%%')
+    #     # st.pyplot(fig, width=10,height=10)
+        
+    #     df = pd.DataFrame(list(zip(orgtype_columns, orgtype_sums)), columns=['Type', "Total"])
+    #     sub_df = df.loc[df['Type'].isin(options)]
+    #     fig, ax = plt.subplots()
+    #     ax.barh(y = sub_df['Type'].to_list(), width = sub_df['Total'].to_list())
+    #     st.pyplot(fig)
+    
     
 def dashboard2021():
     st.write("Dashboard 2021")
+    st.write("coming soon....")
 
 def yearcomparisons():
     st.write("Year Comparisons")
+    st.write("coming soon....")
 
 def clusteringanalysis():
     st.write("Clustering")
+    st.write("coming soon....")
    
 def geographic():
     st.write("Geographic")
+    st.write("coming soon....")
     
 def nlpanalysis():
     st.write("NLP")
+    st.write("coming soon....")
 
 def recommendations():
     st.write("Recommendations")
+    st.write("coming soon....")
 
 def main():
     # base header
@@ -156,6 +206,8 @@ def main():
         nlpanalysis()
     else:
         recommendations()
+        # pr = pandas_profiling.ProfileReport(data_2020, title = "2020 Report", minimal = True)
+        # st_profile_report(pr)
 
 if __name__ == '__main__':
     main()
