@@ -21,7 +21,6 @@ decorator==5.1.1
 defusedxml==0.7.1
 en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.2.0/en_core_web_md-3.2.0-py3-none-any.whl
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0-py3-none-any.whl
-en-core-web-trf @ https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.2.0/en_core_web_trf-3.2.0-py3-none-any.whl
 entrypoints==0.4
 executing==0.8.3
 fastjsonschema==2.15.3
@@ -35,8 +34,6 @@ idna==3.3
 ImageHash==4.2.1
 importlib-metadata==4.11.3
 ipykernel==6.13.0
-ipython==8.2.0
-ipython-genutils==0.2.0
 ipywidgets==7.7.0
 iteration-utilities==0.11.0
 jedi==0.18.1
