@@ -51,12 +51,11 @@ kiwisolver==1.4.2
 kmodes==0.12.0
 langcodes==3.3.0
 MarkupSafe==2.0.1
-matplotlib @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_croot-hkd3cnd2/matplotlib-suite_1647506470899/work
+matplotlib-base==3.5.1
 matplotlib-inline==0.1.3
 missingno==0.5.1
 mistune==0.8.4
 mkl-fft==1.3.1
-mkl-random @ file:///opt/concourse/worker/volumes/live/a9eca864-069c-4240-73c8-4e51b036a10d/volume/mkl_random_1639994047876/work
 mkl-service==2.4.0
 multimethod==1.8
 munkres==1.1.4
@@ -68,9 +67,7 @@ nest-asyncio==1.5.5
 networkx==2.8
 nltk==3.7
 notebook==6.4.10
-numexpr @ file:///Users/builder/ci_310/numexpr_1642534542370/work
-numpy @ file:///opt/concourse/worker/volumes/live/ac169b17-437d-4bc4-6388-8cf92696aa55/volume/numpy_and_numpy_base_1639496871018/work
-packaging @ file:///tmp/build/80754af9/packaging_1637314298585/work
+numpy==1.21.2
 pandas==1.4.1
 pandas-profiling==3.1.0
 pandocfilters==1.5.0
@@ -94,9 +91,7 @@ pydantic==1.8.2
 pydeck==0.7.1
 Pygments==2.11.2
 Pympler==1.0.1
-pyparsing @ file:///tmp/build/80754af9/pyparsing_1635766073266/work
 pyrsistent==0.18.1
-python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
 python-dotenv==0.19.2
 pytz==2021.3
 pytz-deprecation-shim==0.1.0.post0
@@ -146,7 +141,6 @@ typer==0.4.1
 typing_extensions==4.1.1
 tzdata==2022.1
 tzlocal==4.2
-unicodedata2 @ file:///Users/runner/miniforge3/conda-bld/unicodedata2_1649111966296/work
 urllib3==1.26.9
 validators==0.18.2
 visions==0.7.4
@@ -154,5 +148,5 @@ wasabi==0.9.1
 wcwidth==0.2.5
 webencodings==0.5.1
 widgetsnbextension==3.6.0
-wordcloud @ file:///Users/runner/miniforge3/conda-bld/wordcloud_1637007743698/work
+wordcloud==1.8.1
 zipp==3.8.0
