@@ -1,5 +1,4 @@
-# import streamlit as st
-from inspect import CO_VARKEYWORDS
+import streamlit as st
 from wordcloud import STOPWORDS, WordCloud
 import pandas as pd
 from collections import Counter
@@ -26,23 +25,6 @@ service_delivery_2020 = df_2020['service delivery affect reasons'].dropna().toli
 #     tokens = [[word for word in sentence if word.isalpha()] for sentence in tokens_wo_stop]
 #     return tokens
 
-from sklearn.feature_extraction.text import CountVectorizer
-CountVec = CountVectorizer()
-cv = CountVec.fit_transform(service_delivery_2020)
-features = CountVec.get_feature_names()
-features_count = cv.toarray().sum(axis = 0)
-d = dict(zip(features, features_count))
-
-# cols_2020 = ['row hash', 'service delivery affect reasons', 'service delivery change description']
-# df_2020 = get_text_data('data/raw/2020 Survey Data.csv', cols_2020)
-
-# service_delivery_2020 = df_2020['service delivery affect reasons'].dropna().tolist()
-# stop = stopwords.words('english')
-# for sentence in range(len(service_delivery_2020)):
-#     tokens = word_tokenize(service_delivery_2020[sentence].lower())
-#     tokens_wo_stop = [t for t in tokens if t not in stop]
-#     service_delivery_2020[sentence] = " ".join(tokens_wo_stop)
-
 # from sklearn.feature_extraction.text import CountVectorizer
 # CountVec = CountVectorizer()
 # cv = CountVec.fit_transform(service_delivery_2020)
@@ -50,5 +32,27 @@ d = dict(zip(features, features_count))
 # features_count = cv.toarray().sum(axis = 0)
 # d = dict(zip(features, features_count))
 
-# wordcloud = WordCloud(background_color = 'white', width = 600, height = 300).generate_from_frequencies(d)
-# st.image(wordcloud.to_array())
+cols_2020 = ['row hash', 'service delivery affect reasons', 'service delivery change description']
+df_2020 = get_text_data('data/raw/2020 Survey Data.csv', cols_2020)
+
+service_delivery_2020 = df_2020['service delivery affect reasons'].dropna().tolist()
+st.dataframe(service_delivery_2020)
+stop = stopwords.words('english')
+stop.append('level')
+
+for sentence in range(len(service_delivery_2020)):
+    lemmatizer = WordNetLemmatizer()
+    tokens = word_tokenize(service_delivery_2020[sentence].lower())
+    tokens = [lemmatizer.lemmatize(word) for word in tokens]
+    tokens_wo_stop = [t for t in tokens if t not in stop]
+    service_delivery_2020[sentence] = " ".join(tokens_wo_stop)
+
+from sklearn.feature_extraction.text import CountVectorizer
+CountVec = CountVectorizer()
+cv = CountVec.fit_transform(service_delivery_2020)
+features = CountVec.get_feature_names_out()
+features_count = cv.toarray().sum(axis = 0)
+d = dict(zip(features, features_count))
+
+wordcloud = WordCloud(background_color = 'white', width = 600, height = 300).generate_from_frequencies(d)
+st.image(wordcloud.to_array())
