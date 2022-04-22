@@ -1,18 +1,11 @@
 # Package Installations
 from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
-from wordcloud import WordCloud
+# from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-# import spacy
-# from annotated_text import annotated_text
-from st_aggrid import AgGrid
-# from nltk import word_tokenize
-# from nltk.corpus import stopwords
-from streamlit_pandas_profiling import st_profile_report
-import pandas_profiling
-import plost
 
 
 # Page and Footer configurations
