@@ -17,7 +17,7 @@ CountVec = CountVectorizer()
 
 def word_cloud_generator(df, lst):
     for x in lst:
-        temp_df = df[x].dropna().to_list()
+        temp_df = df.reset_index()[x].dropna().to_list()
         for sentence in range(len(temp_df)):
             tokens = word_tokenize(temp_df[sentence].lower())
             tokens = [lemmatizer.lemmatize(word) for word in tokens]

@@ -1,17 +1,26 @@
 # Package Installations
+from email.policy import default
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from wordcloud import STOPWORDS, WordCloud
+from wordcloud import WordCloud
 import nltk
 from nltk import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
+import sys
+from nlp.word_cloud import word_cloud_generator
 
+@st.cache
+def df2020():
+    return pd.read_csv('data/processed/df_2020_ohe.csv')
+@st.cache
+def df2021():
+    return pd.read_csv('data/processed/df_2021_ohe.csv')
 
 # Page and Footer configurations
 st.set_page_config(
@@ -112,8 +121,7 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 def dashboard2020():
     st.write("Dashboard 2020")
     st.write("coming soon....")
-    
-    
+     
 def dashboard2021():
     st.write("Dashboard 2021")
     st.write("coming soon....")
@@ -175,8 +183,24 @@ def geographic():
     st.write("coming soon....")
     
 def nlpanalysis():
-    st.write("NLP")
-    st.write("coming soon....")
+    st.write("## Year Comparisons")
+    st.markdown("***")
+    with st.expander("Make 2020 WordClouds"):
+        st.write("Explore any of the free text fields in the 2020 Survey Data through a word cloud!")
+        select20 = st.selectbox("Description fields - 2020 Data", [
+            'service delivery affect reasons', 'service delivery change description', 'challenges: Other (please specify)',
+            'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
+            'other new ways', 'comments'])
+        word_cloud_generator(df2020(), [select20])
+    with st.expander("Make 2021 WordClouds"):
+        st.write("Explore any of the free text fields in the 2021 Survey Data through a word cloud!")
+        select21 = st.selectbox("Description fields - 2021 Data", [
+            'service delivery affect reasons', 'service delivery change description', 'challenges: Other (please specify)',
+            'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
+            'other new ways', 'comments'])
+        
+        
+    
 
 def recommendations():
     st.write("Recommendations")
