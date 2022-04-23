@@ -86,6 +86,20 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         - https://www.youtube.com/watch?v=d0Fde3bCvZ0\n
         - https://www.nzbirds.com/birds/tui.html
         """)
+    with st.expander("The Good Data Institute"):
+        col1, col2 = st.columns([4,1])
+        with col1:
+            st.write("""
+            ### The Good Data Institute
+        
+            A global community of ambitious data professionals.
+            Our mission is to be the bridge between the not-for-profit world and the world of data analytics practitioners wishing to do social good. Using D&A, we identify, share, and help implement the most effective means for growing NFP people, organisations, and their impact. Our ultimate goal is social good. We believe that data and analytics has tremendous potential to help not for profit organisations achieve greater impact.\n
+           [Read More Here!](https://www.gooddatainstitute.com/)
+            """)
+        with col2:
+            st.markdown("***")
+            st.image('assets/gdi-logo.png')
+            st.markdown("***")
 
 def dashboard2020():
     st.write("Dashboard 2020")
@@ -122,9 +136,8 @@ def main():
     
     # sidebar as applicable (can add additional sidebar items)
     with st.sidebar:
-        col1, col2, col3 = st.columns([0.5, 1.5,0.5])
-        with col2:
-            st.image("assets/huielogo.jpeg", width = 150)
+        col1, col2, col3 = st.columns([0.3, 1.5,0.5])
+        st.image("assets/huielogo-edited.png", width = 300)
         st.title("Navigator")
         st.write(
             """
