@@ -4,8 +4,13 @@ from matplotlib import pyplot as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
-# from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+from wordcloud import STOPWORDS, WordCloud
+import nltk
+from nltk import word_tokenize
+from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.corpus import stopwords
 
 
 # Page and Footer configurations
@@ -25,7 +30,10 @@ st.markdown("""<style>
 	/* This is to hide Streamlit footer */
 	footer {visibility: hidden;}
 	</style>""", unsafe_allow_html=True)
-    
+
+def spacer(height):
+    for _ in range(height):
+            st.write('\n')
 
 # Completed
 def home():
@@ -111,9 +119,53 @@ def dashboard2021():
     st.write("coming soon....")
 
 def yearcomparisons():
-    st.write("Year Comparisons")
-    st.write("coming soon....")
-
+    st.write("## Year Comparisons")
+    st.write("""
+             We explore the changes occuring over the years throughout the two surveys collected by presenting the information
+             side by side.\n\n\n***""")
+    st.markdown("#### Changes in Service Delivery Over the Years")
+    col1, col2 = st.columns(2)
+    def column_builder(lst):
+        for item in lst:
+            st.image(f"joyce/{item}")
+            spacer(2)
+    with col1:
+        st.markdown('#### 2020 Survey')
+        service_delivery_2020 = ['Changes in the level of service delivery by organisation income - 2020.png', 
+                                 'Changes in the level of service delivery by service type - 2020.png',
+                                 'Changes in the level of service delivery by the number of paid staff - 2020.png',
+                                 'Changes in the level of service delivery by the number of volunteers - 2020.png']
+        column_builder(service_delivery_2020)                       
+    with col2:
+        st.markdown('#### 2021 Survey')
+        service_delivery_2021 = ['Changes in the level of service delivery by organisation income - 2021.png', 
+                                 'Changes in the level of service delivery by service type - 2021.png',
+                                 'Changes in the level of service delivery by the number of paid staff - 2021.png',
+                                 'Changes in the level of service delivery by the number of volunteers - 2021.png']
+        column_builder(service_delivery_2021)
+    _, col2, _ = st.columns(3)
+    col2.image('joyce/Changes in the level of service delivery over time.png')
+    st.markdown("***")
+    st.markdown("#### Funding Resources Over the Years")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('#### 2020 Survey')
+        funding_2020 = ['Funding reserve level by organisation income - 2020.png',
+                        'Funding reserve level by service type - 2020.png',
+                        'Funding reserve level by the number of paid staff - 2020.png',
+                        'Funding reserve level by the number of volunteers - 2020.png']
+        column_builder(funding_2020)
+    with col2:
+        st.markdown('#### 2021 Survey')
+        funding_2021 = ['Funding reserve level by organisation income - 2021.png',
+                        'Funding reserve level by service type - 2021.png',
+                        'Funding reserve level by the number of paid staff - 2021.png',
+                        'Funding reserve level by the number of volunteers - 2021.png']
+        column_builder(funding_2021)
+    _, col2, _ = st.columns(3)
+    col2.image('joyce/Funding reserve levels over time.png')
+    st.markdown("***")
+    
 def clusteringanalysis():
     st.write("Clustering")
     st.write("coming soon....")
@@ -149,8 +201,8 @@ def main():
                          'Geographic Analysis','Natural Language Processing','Recommendations'])
         st.write("_____")
         st.sidebar.write("""
-        *Team Members: Matthew, Joyce, Cynthia, Nicolas, & Raul*
-        \n *Advisors: Shreyank & Shakeel*
+        Team Members: Matthew, Joyce, Cynthia, Nicolas, & Raul
+        \n Advisors: Shreyank & Shakeel
     _____""")
     
     # page navigation
