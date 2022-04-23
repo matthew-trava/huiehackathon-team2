@@ -3,13 +3,14 @@ from wordcloud import STOPWORDS, WordCloud
 import pandas as pd
 from collections import Counter
 import nltk
+nltk.download('stopwords')
 from nltk import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
+
+    
 stop = stopwords.words('english')
 stop.append('level')
 lemmatizer = WordNetLemmatizer()
