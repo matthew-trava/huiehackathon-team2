@@ -10,6 +10,7 @@ from wordcloud import WordCloud
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('wordnet')
 from nltk import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
