@@ -1,32 +1,5 @@
-# Package Installations
-from email.policy import default
-from matplotlib.figure import Figure
-from matplotlib import pyplot as plt
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
-from nltk import word_tokenize
-from nltk.stem.wordnet import WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer
-from nltk.corpus import stopwords
-import sys
-from nlp.word_cloud import word_cloud_generator
-
-@st.cache
-def df2020():
-    return pd.read_csv('data/processed/df_2020_ohe.csv')
-@st.cache
-def df2021():
-    return pd.read_csv('data/processed/df_2021_ohe.csv')
-
 # Page and Footer configurations
+import streamlit as st
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -43,6 +16,35 @@ st.markdown("""<style>
 	/* This is to hide Streamlit footer */
 	footer {visibility: hidden;}
 	</style>""", unsafe_allow_html=True)
+
+# Package Installations
+from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import nltk
+@st.cache()
+def nltk_downloads():
+    nltk.download('stopwords')
+    nltk.download('punkt')
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
+nltk_downloads()
+from nltk import word_tokenize
+from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.corpus import stopwords
+import sys
+from nlp.word_cloud import word_cloud_generator
+
+@st.cache
+def df2020():
+    return pd.read_csv('data/processed/df_2020_ohe.csv')
+@st.cache
+def df2021():
+    return pd.read_csv('data/processed/df_2021_ohe.csv')
 
 def spacer(height):
     for _ in range(height):
@@ -219,7 +221,10 @@ def nlpanalysis():
             'service delivery affect reasons', 'service delivery change description', 'challenges: Other (please specify)',
             'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
             'other new ways', 'comments'])
-        
+        # word_cloud_generator(df2021(), [select21])
+    
+    test = "Potato"
+    st.markdown(f"""# <span style="color:blue">{test}</span>""", unsafe_allow_html=True)
         
     
 
