@@ -178,6 +178,21 @@ def yearcomparisons():
     col2.image('joyce/Funding reserve levels over time.png')
     st.markdown("***")
     
+    # Further comparisons
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('#### 2020 Survey')
+        other20 = ['Sector changes 2020.png', 'Services changes 2020.png',
+                   'Staffing changes 2020.png', 'Support accessed 2020.png',
+                   'Support needed 2020.png']
+        column_builder(other20)
+    with col2:
+        st.markdown('#### 2021 Survey')
+        other21 = ['Sector changes 2021.png', 'Services changes 2021.png',
+                   'Staffing changes 2021.png', 'Support accessed 2021.png',
+                   'Support needed 2021.png']
+        column_builder(other21)
+    
 def clusteringanalysis():
     st.write("Clustering")
     st.write("coming soon....")
@@ -189,6 +204,8 @@ def geographic():
 def nlpanalysis():
     st.write("## Year Comparisons")
     st.markdown("***")
+    
+    # Word Clouds
     with st.expander("Make 2020 WordClouds"):
         st.write("Explore any of the free text fields in the 2020 Survey Data through a word cloud!")
         select20 = st.selectbox("Description fields - 2020 Data", [
