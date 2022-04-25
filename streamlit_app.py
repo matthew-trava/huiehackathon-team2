@@ -1,5 +1,6 @@
 # Page and Footer configurations
 import streamlit as st
+from transformers import LEDForConditionalGeneration
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -50,11 +51,32 @@ def sentiment2020():
     return pd.read_csv('data/processed/sentiment/2020_sentiment_subjectivity.csv', usecols = ['Field', 'Text', 'sentiment', 'sentiment_group', 'subjectivity', 'subjectivity_group'])
 @st.cache
 def sentiment2021():
-    return pd.read_csv('data/processed/sentiment/2021_sentiment_subjectivity.csv')
-
+    return pd.read_csv('data/processed/sentiment/2021_sentiment_subjectivity.csv', usecols = ['Field', 'Text', 'sentiment', 'sentiment_group', 'subjectivity', 'subjectivity_group'])
+@st.cache
+def emotions2020():
+    return pd.read_csv('data/processed/emotions/2020_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
+@st.cache
+def emotions2021():
+    return pd.read_csv('data/processed/emotions/2021_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
 def spacer(height):
     for _ in range(height):
             st.write('\n')
+
+def sentiment_cards(data,title,colour):
+    st.markdown(f"""
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<div class="card text-center border-{colour} mb-3" style="max-width: 15rem; height: 10rem">
+  <div class="card-header bg-{colour} text">{title}</div>
+    <div class="card-body">
+        <h1 class="card-text">{data.shape[0]}</h1>
+  </div>
+</div>""", unsafe_allow_html=True)
 
 # Completed
 def home():
@@ -103,7 +125,8 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 [Full Report](https://www.huie.org.nz/wp-content/uploads/COVID-19-Hauora-Wellbeing-Report-2021.pdf)""")
     
     with st.expander("Our Team Name"):
-        st.write("""
+        left, right = st.columns([3,1])
+        left.write("""
         ____
         ### Our Team Name
     
@@ -115,6 +138,8 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         - https://www.youtube.com/watch?v=d0Fde3bCvZ0\n
         - https://www.nzbirds.com/birds/tui.html
         """)
+        right.image("https://i.pinimg.com/564x/27/84/79/278479a3a96b07e562fcba3f5d126a86.jpg")
+        
     with st.expander("The Good Data Institute"):
         col1, col2 = st.columns([4,1])
         with col1:
@@ -126,9 +151,9 @@ Going through each of the **6 pages** you'll observe our findings and insights w
            [Read More Here!](https://www.gooddatainstitute.com/)
             """)
         with col2:
-            st.markdown("***")
+            spacer(4)
             st.image('assets/gdi-logo.png')
-            st.markdown("***")
+            spacer(1)
 
 def dashboard2020():
     st.write("Dashboard 2020")
@@ -210,17 +235,52 @@ def geographic():
     st.write("coming soon....")
     
 def nlpanalysis():
-    st.write("## Year Comparisons")
+    st.write("## Natural Language Processing")
     st.markdown("***")
     
-    # Word Clouds
-    with st.expander("Make 2020 WordClouds"):
+    # 2020 Analysis
+    st.markdown("## 2020 Survey")
+    with st.expander("2020 WordClouds"):
         st.write("Explore any of the free text fields in the 2020 Survey Data through a word cloud!")
         select20 = st.selectbox("Description fields - 2020 Data", [
             'service delivery affect reasons', 'service delivery change description', 'challenges: Other (please specify)',
             'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
             'other new ways', 'comments'])
         word_cloud_generator(df2020(), [select20])
+    with st.expander("2020 Sentiment Analysis"):
+        st.markdown("""
+                    On certain textual data we conducted sentiment analysis using the Pasttern Analysis calculation methodology.
+                    Beyond sentiment (positive, negative, and neutral) we also calculated the relative subjectivity / objectivity of the text.\n\n
+                    You can see below the numbers present for each of the categories found and are able to manipulate the filters to see the data with the assumed sentiment and polarity.""")
+        st.markdown("***")
+        text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['Field'].unique()))
+        temp_sentiment20_df = sentiment2020()[sentiment2020()['Field']==text_fields20]
+        col1, col2, col3 = st.columns([2,2,2])
+        with col1:
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Positive"],"Positive",'success')
+        with col2:
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Neutral"],"Neutral",'warning')
+        with col3:
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Negative"],"Negative",'danger')
+        
+        st.dataframe(temp_sentiment20_df)
+    with st.expander("2020 Emotions Analysis"):
+        st.markdown("""
+                    Emotions Analysis - TO BE POPULATED
+                    """)
+        st.markdown("***")
+        emotion_fields20 = st.selectbox("2020 Survey Fields", emotions2020()['Field'].unique())
+        emotions20_select = st.multiselect("2020 Emotions Selections", emotions2020()['emotions'].unique(), default = 'optimism')
+        if len(emotions20_select) == 0:
+            temp_emotions20_df = emotions2020()[(emotions2020()['Field'] == emotion_fields20)]
+        else:
+            temp_emotions20_df = emotions2020()[(emotions2020()['Field'] == emotion_fields20) & (emotions2020()['emotions'].isin(emotions20_select))]
+        st.metric("Total Options under Select", temp_emotions20_df.shape[0])
+        st.dataframe(temp_emotions20_df)
+        
+    
+    st.markdown('***')
+    st.markdown("## 2021 Survey")
     with st.expander("Make 2021 WordClouds"):
         st.write("Explore any of the free text fields in the 2021 Survey Data through a word cloud!")
         select21 = st.selectbox("Description fields - 2021 Data", [
@@ -232,62 +292,37 @@ def nlpanalysis():
             'Can you please give us an example of collaboration, sharing, partnerships and/or strategic decisions your organisation has made with other organisations, groups and/or government departments (since the beginning of the COVID-19 pandemic)?',
             'Can you tell us a short story about your experiences','Is there anything else you would like to share with us or comment on'])
         word_cloud_generator(df2021(), [select21])
-        
-    with st.expander("Sentiment Analysis"):
+    with st.expander("2021 Sentiment Analysis"):
         st.markdown("""
-                    On certain textual data we conducted sentiment analysis using the Pattern Analysis calculation methodology.
+                    On certain textual data we conducted sentiment analysis using the Pasttern Analysis calculation methodology.
                     Beyond sentiment (positive, negative, and neutral) we also calculated the relative subjectivity / objectivity of the text.\n\n
                     You can see below the numbers present for each of the categories found and are able to manipulate the filters to see the data with the assumed sentiment and polarity.""")
         st.markdown("***")
-        text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['Field'].unique()))
+        text_fields21 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2021()['Field'].unique()))
+        temp_sentiment21_df = sentiment2021()[sentiment2021()['Field']==text_fields21]
         col1, col2, col3 = st.columns([2,2,2])
-        col1.markdown(f"""
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-<div class="card text-center border-success mb-3" style="max-width: 15rem; height: 10rem">
-  <div class="card-header bg-success text">Positive</div>
-    <div class="card-body">
-        <h1 class="card-text">{sentiment2020()[(sentiment2020()['sentiment_group']=='Positive') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
-  </div>
-</div>""", unsafe_allow_html=True)
-        col2.markdown(f"""
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-<div class="card text-center border-warning mb-3" style="max-width: 15rem; height: 10rem">
-  <div class="card-header bg-warning text">Neutral</div>
-    <div class="card-body">
-        <h1 class="card-text">{sentiment2020()[(sentiment2020()['sentiment_group']=='Neutral') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
-  </div>
-</div>""", unsafe_allow_html=True)
-        col3.markdown(f"""
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-<div class="card text-center border-danger mb-3" style="max-width: 15rem; height: 10rem">
-  <div class="card-header bg-danger text">Negative</div>
-    <div class="card-body">
-        <h1 class="card-text text-bold">{sentiment2020()[(sentiment2020()['sentiment_group']=='Negative') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
-  </div>
-</div>""", unsafe_allow_html=True)
-        st.dataframe(sentiment2020()[sentiment2020()['Field']==text_fields20])
+        with col1:
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Positive"],"Positive",'success')
+        with col2:
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Neutral"],"Neutral",'warning')
+        with col3:
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Negative"],"Negative",'danger')
         
+        st.dataframe(temp_sentiment21_df) 
+    with st.expander("2021 Emotions Analysis"):
+        st.markdown("""
+                    Emotions Analysis - TO BE POPULATED
+                    """)
+        st.markdown("***")
+        emotion_fields21 = st.selectbox("2021 Survey Fields", emotions2021()['Field'].unique())
+        emotions21_select = st.multiselect("2021 Emotions Selections", emotions2021()['emotions'].unique(), default = 'optimism')
+        if len(emotions21_select) == 0:
+            temp_emotions21_df = emotions2021()[(emotions2021()['Field'] == emotion_fields21)]
+        else:
+            temp_emotions21_df = emotions2021()[(emotions2021()['Field'] == emotion_fields21) & (emotions2021()['emotions'].isin(emotions21_select))]
+        st.metric("Total Options under Select", temp_emotions21_df.shape[0])
+        st.dataframe(temp_emotions21_df)
         
-    
-
 def recommendations():
     st.write("Recommendations")
     st.write("coming soon....")
