@@ -1,17 +1,17 @@
-gdp_pc,region
-"42,251",Northland
-"71,358",Auckland
-"56,139",Waikato
-"55,986",Bay of Plenty
-"45,345",Gisborne
-"50,913",Hawke's Bay
-"76,348",Taranaki
-"48,864",Manawatū-Whanganui
-"74,303",Wellington
-"46,905",Tasman
-"61,530",Nelson
-"65,538",Marlborough
-"56,667",West Coast
-"61,869",Canterbury
-"57,807",Otago
-"65,478",Southland
+region,gdp_pc
+Northland,42251
+Auckland,71358
+Waikato,56139
+Bay of Plenty,55986
+Gisborne,45345
+Hawke's Bay,50913
+Taranaki,76348
+Manawatū-Whanganui,48864
+Wellington,74303
+Tasman,46905
+Nelson,61530
+Marlborough,65538
+West Coast,56667
+Canterbury,61869
+Otago,57807
+Southland,65478
