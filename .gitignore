@@ -1,1 +1,6 @@
+# manually added
 .DS_Store
+data/regional-council-2022-clipped-generalised.shp
+data/regional_council_2022_clipped_csv.cs
+.ipynb_checkpoints/
+data/gis/
