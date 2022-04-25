@@ -45,6 +45,12 @@ def df2020():
 @st.cache
 def df2021():
     return pd.read_csv('data/processed/df_2021_ohe.csv')
+@st.cache
+def sentiment2020():
+    return pd.read_csv('data/processed/sentiment/2020_sentiment_subjectivity.csv', usecols = ['Field', 'Text', 'sentiment', 'sentiment_group', 'subjectivity', 'subjectivity_group'])
+@st.cache
+def sentiment2021():
+    return pd.read_csv('data/processed/sentiment/2021_sentiment_subjectivity.csv')
 
 def spacer(height):
     for _ in range(height):
@@ -218,13 +224,67 @@ def nlpanalysis():
     with st.expander("Make 2021 WordClouds"):
         st.write("Explore any of the free text fields in the 2021 Survey Data through a word cloud!")
         select21 = st.selectbox("Description fields - 2021 Data", [
-            'service delivery affect reasons', 'service delivery change description', 'challenges: Other (please specify)',
-            'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
-            'other new ways', 'comments'])
-        # word_cloud_generator(df2021(), [select21])
-    
-    test = "Potato"
-    st.markdown(f"""# <span style="color:blue">{test}</span>""", unsafe_allow_html=True)
+            'Concern Group: Other concerns (please specify)','Can you please tell us the main reasons for these changes in service delivery?',
+            'Five Main Challenges: Other (please specify)', 'Five Opportunities or Personal Outcomes: Other (please specify)',
+            'Can you please tell us your organisations current key priorities and or concerns', 'Non Financial Support your Organisation Needs: Other (please specify)',
+            'Adjustments: Other (please specify)', 'Can you give us some examples of other innovations and changes you have made or adopted?',
+            'What sorts of changes do you think are needed to strengthen the tangata whenua, community and voluntary sector in the future? Other (Please specify).',
+            'Can you please give us an example of collaboration, sharing, partnerships and/or strategic decisions your organisation has made with other organisations, groups and/or government departments (since the beginning of the COVID-19 pandemic)?',
+            'Can you tell us a short story about your experiences','Is there anything else you would like to share with us or comment on'])
+        word_cloud_generator(df2021(), [select21])
+        
+    with st.expander("Sentiment Analysis"):
+        st.markdown("""
+                    On certain textual data we conducted sentiment analysis using the Pattern Analysis calculation methodology.
+                    Beyond sentiment (positive, negative, and neutral) we also calculated the relative subjectivity / objectivity of the text.\n\n
+                    You can see below the numbers present for each of the categories found and are able to manipulate the filters to see the data with the assumed sentiment and polarity.""")
+        st.markdown("***")
+        text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['Field'].unique()))
+        col1, col2, col3 = st.columns([2,2,2])
+        col1.markdown(f"""
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<div class="card text-center border-success mb-3" style="max-width: 15rem; height: 10rem">
+  <div class="card-header bg-success text">Positive</div>
+    <div class="card-body">
+        <h1 class="card-text">{sentiment2020()[(sentiment2020()['sentiment_group']=='Positive') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
+  </div>
+</div>""", unsafe_allow_html=True)
+        col2.markdown(f"""
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<div class="card text-center border-warning mb-3" style="max-width: 15rem; height: 10rem">
+  <div class="card-header bg-warning text">Neutral</div>
+    <div class="card-body">
+        <h1 class="card-text">{sentiment2020()[(sentiment2020()['sentiment_group']=='Neutral') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
+  </div>
+</div>""", unsafe_allow_html=True)
+        col3.markdown(f"""
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<div class="card text-center border-danger mb-3" style="max-width: 15rem; height: 10rem">
+  <div class="card-header bg-danger text">Negative</div>
+    <div class="card-body">
+        <h1 class="card-text text-bold">{sentiment2020()[(sentiment2020()['sentiment_group']=='Negative') & (sentiment2020()['Field']==text_fields20)].shape[0]}</h1>
+  </div>
+</div>""", unsafe_allow_html=True)
+        st.dataframe(sentiment2020()[sentiment2020()['Field']==text_fields20])
+        
         
     
 
@@ -234,7 +294,7 @@ def recommendations():
 
 def main():
     # base header
-    st.title("HuiE Hackathon: Team Tūī")
+    st.markdown("""# <span style="color:#353455">HuiE Hackathon: Team Tūī</span>""", unsafe_allow_html=True)
     
     # sidebar as applicable (can add additional sidebar items)
     with st.sidebar:
