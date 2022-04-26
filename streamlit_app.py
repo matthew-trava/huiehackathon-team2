@@ -329,7 +329,7 @@ def recommendations():
 
 def main():
     # base header
-    st.markdown("""# <span style="color:#353455">HuiE Hackathon: Team Tūī</span>""", unsafe_allow_html=True)
+    st.markdown("""# <span style="color:#353455">Hui E Hackathon: Team Tūī</span>""", unsafe_allow_html=True)
     
     # sidebar as applicable (can add additional sidebar items)
     with st.sidebar:
