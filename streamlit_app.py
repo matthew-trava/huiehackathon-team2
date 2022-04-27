@@ -351,7 +351,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
             csv = convert_df(temp_emotions20_df)
             st.download_button('Press to Download',
                                csv,
-                               'sentiment.csv',
+                               'emotions.csv',
                                'text/csv',
                                key='download-csv')
         
@@ -412,10 +412,10 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         st.metric("Total Options under Select", temp_emotions21_df.shape[0])
         st.dataframe(temp_emotions21_df)
         if st.checkbox("Download the emotions table for 2021 for the column selected"):
-            csv = convert_df(temp_emotions20_df)
+            csv = convert_df(temp_emotions21_df)
             st.download_button('Press to Download',
                                csv,
-                               'sentiment.csv',
+                               'emotions.csv',
                                'text/csv',
                                key='download-csv')
         
