@@ -232,6 +232,17 @@ def geographic():
     
 def nlpanalysis():
     st.write("## Natural Language Processing")
+    st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
+Text data is hard to analyse because it is filled with linguistic nuances to determine underlying meaning and intent of the message being conveyed.
+People can often understand the underlying meanings and the emotions that back the information presented through text data such as books, reviews and comments.
+\n \n A large feature set of the information collected by Hui E was in the form of text; responses written by charity and voluntary organisations conveying an overall feeling or sentiment in regards to their challenges and future outlook.\n
+To help us understand and analyse this textual data given we utilised three methods to understand and bring to light that information in a more palatable and analytical manner.
+Explore the three types of analysis, and the following methods of interpretation by explanding the items below!""")
+    
+    with st.expander("Method 1: Word Clouds"):
+        st.write("""Word Clouds represent the frequency of which a word occurs within a set of text (in our case, all times a word appears within the list of responses for that particular question).\n
+The larger a word is the more frequent it has appeared and the smaller it is the less frequent it has appeared within the text.\n
+One of the issues with text data """)
     st.markdown("***")
     
     # 2020 Analysis
