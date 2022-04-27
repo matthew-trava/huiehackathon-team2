@@ -1,6 +1,5 @@
 # Streamlit Import and Configuration
 import streamlit as st
-from joyce.nicsvis import comparison_plots
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -39,6 +38,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 import sys
 from nlp.word_cloud import word_cloud_generator
+from joyce.nicsvis import comparison_plots
 
 @st.cache
 def df2020():
