@@ -1,4 +1,4 @@
-# Page and Footer configurations
+# Streamlit Import and Configuration
 import streamlit as st
 st.set_page_config(
      page_title="Team Tūī",
@@ -246,6 +246,7 @@ def nlpanalysis():
             'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
             'other new ways', 'comments'])
         word_cloud_generator(df2020(), [select20])
+        st.write("We note some key thematics are shown explicitly within the word clouds generated.")
     with st.expander("2020 Sentiment Analysis"):
         st.markdown("""
                     On certain textual data we conducted sentiment analysis using the Pasttern Analysis calculation methodology.
