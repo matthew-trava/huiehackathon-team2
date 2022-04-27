@@ -1,5 +1,6 @@
 # Streamlit Import and Configuration
 import streamlit as st
+from joyce.nicsvis import comparison_plots
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -166,6 +167,12 @@ def yearcomparisons():
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
     col1, col2 = st.columns(2)
+
+    st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
+    st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
+    st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
+    st.plotly_chart(comparison_plots("funding_service"), use_container_width=True)
+
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
