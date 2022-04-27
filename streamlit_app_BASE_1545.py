@@ -83,12 +83,12 @@ def home():
 
     st.write(
         """### Welcome to Team Tūī's Hackathon submission!
-As part of our submission we've produced a series of analysis broken down into **5 key areas**.
+As part of our submission we've produced a series of analysis broken down into **6 key areas**.
 Going through each of the **6 pages** you'll observe our findings and insights written alongside the graphs and imagery produced.
              """)
     
     col1, col2, col3 = st.columns(3)
-    col4, col5 = st.columns(2)
+    col4, col5, col6 = st.columns(3)
     
     with col1:
         st.write("#### 2020 Summary")
@@ -100,9 +100,12 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         st.write("#### Year-to-Year Comparisons")
         st.write("We present questions that can be matched across both time periods")
     with col4:
+        st.write("#### Clustering Analysis")
+        st.write("In this portion we analyse similarity between respondents based off what they responded using clustering algorithms")
+    with col5:
         st.write("#### Geographic Analysis")
         st.write("We assess question responses in relation to there location and/or location of impact")
-    with col5:
+    with col6:
         st.write("#### Natural Language Processing")
         st.write("Utilising a series of machine learning capabilities to understand entities within the text but also categorise similar comments/worded responses")
 

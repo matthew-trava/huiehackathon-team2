@@ -1,5 +1,7 @@
 # Streamlit Import and Configuration
 import streamlit as st
+from joyce.nicsvis import comparison_plots
+
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -83,12 +85,14 @@ def home():
 
     st.write(
         """### Welcome to Team Tūī's Hackathon submission!
-As part of our submission we've produced a series of analysis broken down into **5 key areas**.
+As part of our submission we've produced a series of analysis broken down into **6 key areas**.
 Going through each of the **6 pages** you'll observe our findings and insights written alongside the graphs and imagery produced.
              """)
     
     col1, col2, col3 = st.columns(3)
-    col4, col5 = st.columns(2)
+    col4, col5, col6 = st.columns(3)
+
+
     
     with col1:
         st.write("#### 2020 Summary")
@@ -100,9 +104,12 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         st.write("#### Year-to-Year Comparisons")
         st.write("We present questions that can be matched across both time periods")
     with col4:
+        st.write("#### Clustering Analysis")
+        st.write("In this portion we analyse similarity between respondents based off what they responded using clustering algorithms")
+    with col5:
         st.write("#### Geographic Analysis")
         st.write("We assess question responses in relation to there location and/or location of impact")
-    with col5:
+    with col6:
         st.write("#### Natural Language Processing")
         st.write("Utilising a series of machine learning capabilities to understand entities within the text but also categorise similar comments/worded responses")
 
@@ -166,17 +173,27 @@ def yearcomparisons():
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
     col1, col2 = st.columns(2)
+    vis1 = comparison_plots('staff_service')
+    st.plotly_chart(vis1, use_container_width=True)
+    vis1 = comparison_plots('volunteers_service')
+    st.plotly_chart(vis1, use_container_width=True)
+    vis1 = comparison_plots('funding_service')
+    st.plotly_chart(vis1, use_container_width=True)
+
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
             spacer(2)
+
+
     with col1:
         st.markdown('#### 2020 Survey')
         service_delivery_2020 = ['Changes in the level of service delivery by organisation income - 2020.png', 
                                  'Changes in the level of service delivery by service type - 2020.png',
                                  'Changes in the level of service delivery by the number of paid staff - 2020.png',
                                  'Changes in the level of service delivery by the number of volunteers - 2020.png']
-        column_builder(service_delivery_2020)                       
+        column_builder(service_delivery_2020)
+
     with col2:
         st.markdown('#### 2021 Survey')
         service_delivery_2021 = ['Changes in the level of service delivery by organisation income - 2021.png', 
