@@ -242,7 +242,28 @@ Explore the three types of analysis, and the following methods of interpretation
     with st.expander("Method 1: Word Clouds"):
         st.write("""Word Clouds represent the frequency of which a word occurs within a set of text (in our case, all times a word appears within the list of responses for that particular question).\n
 The larger a word is the more frequent it has appeared and the smaller it is the less frequent it has appeared within the text.\n
-One of the issues with text data """)
+One of the issues with text data is that often the same word appears but in different ways. Examples are:\n
+> swimming, 
+> swam, 
+> swim, 
+> swims
+\n
+All these words have the same "root" word that backs them - the word swim. In order to make it easier to interpret and understand we apply a **lemmatiser** which essentially bnrings words back to their word root form (producing a lemma). This differs to a **Stemmer** as it **makes the words produced valid** and
+doesn't just remove plurality or other known endings from words.\n
+Our word clouds hence are a function of all the words responded from the question by all respondants brought back to it's root and then visualised in the form of a word cloud.
+\n \n
+### Interpreting Word Clouds\n
+Interpreting the word clouds can be as simple as seeing larger words as items more focused on and mentioned by survey responders and smaller words less discussed. \n
+From the cloud of words you can also see common themes amongst the words and draw conclusions from there.
+""")
+        
+    with st.expander("Method 2: Sentiment Analysis"):
+        st.write("""
+""")
+        
+    with st.expander("Method 3: Emotions Analysis"):
+        st.write("""
+""")
     st.markdown("***")
     
     # 2020 Analysis
