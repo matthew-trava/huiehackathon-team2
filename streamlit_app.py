@@ -258,7 +258,8 @@ From the cloud of words you can also see common themes amongst the words and dra
 """)
         
     with st.expander("Method 2: Sentiment Analysis"):
-        st.write("""
+        st.write(""" Sentiment analysis refers to the NLP technique that tries to extract whether a given word, sentence or larger block of text can be considered negative, positive or neutral in sentiment.\n
+In order to do this we used a **lexicon based approach**. This approach utilises a large dictionary of words with a given sentiment score. Sentiment scores, ranging between -1 for negative sentiment to +1 for positive sentiment, given an indication as to how negative or positive 
 """)
         
     with st.expander("Method 3: Emotions Analysis"):
