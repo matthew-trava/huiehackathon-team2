@@ -5,4 +5,4 @@ numpy==1.21.2
 wordcloud==1.8.1
 scikit-learn==1.0.2
 nltk==3.7
-
+plotly==5.7.0
