@@ -259,7 +259,21 @@ From the cloud of words you can also see common themes amongst the words and dra
         
     with st.expander("Method 2: Sentiment Analysis"):
         st.write(""" Sentiment analysis refers to the NLP technique that tries to extract whether a given word, sentence or larger block of text can be considered negative, positive or neutral in sentiment.\n
-In order to do this we used a **lexicon based approach**. This approach utilises a large dictionary of words with a given sentiment score. Sentiment scores, ranging between -1 for negative sentiment to +1 for positive sentiment, given an indication as to how negative or positive 
+In order to do this we used a **lexicon based approach**. This approach utilises a large dictionary of words with a given sentiment score. Sentiment scores, ranging between -1 for negative sentiment to +1 for positive sentiment, given an indication as to how negative or positive text is.
+
+### Two Approach\n
+A lexicon based approach is only as good as the dictionary of words it has with it's associated sentiment scores. In order to understand that often these given different results we utilise both the textblob sentiment analysis and the
+NLTK VADER (Valence Aware Dictionary for sentiment Reasoning). Both of these rule based sentiment approaches are adaptable and simple to use and transfer well to multiple types of text based data.\n
+One of the key drawbacks however is that it may not consider all similar words and their context (like an embeddings based model). \n 
+We used both methods and present however it is filtering on the textblob analysis.\n
+
+### Our Sentiment Range
+We determine a score greater than 0.25 as text that is positive in sentiment, scores between 0.25 and -0.25 as neutral, and less than -0.25 as negative.
+The more positive (negative) a value is infers that there were more words/n-grams with positive (negative) sentiment present.
+
+### Subjectivity Analysis
+A subset to the sentiment analysis we also look at subjectivity within the text present. Subjectivity refers to how emotive a text or opinionated a text may be whereas objective would be text which seems to be more rooted, or written with, factual information in mind.\n
+A score closer to 0 means the text more objective in nature and a score closer to 1 means the text is more subjective in nature.
 """)
         
     with st.expander("Method 3: Emotions Analysis"):
