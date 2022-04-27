@@ -1,5 +1,7 @@
 # Streamlit Import and Configuration
 import streamlit as st
+from joyce.nicsvis import comparison_plots
+
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -89,6 +91,8 @@ Going through each of the **6 pages** you'll observe our findings and insights w
     
     col1, col2, col3 = st.columns(3)
     col4, col5, col6 = st.columns(3)
+
+
     
     with col1:
         st.write("#### 2020 Summary")
@@ -169,17 +173,27 @@ def yearcomparisons():
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
     col1, col2 = st.columns(2)
+    vis1 = comparison_plots('staff_service')
+    st.plotly_chart(vis1, use_container_width=True)
+    vis1 = comparison_plots('volunteers_service')
+    st.plotly_chart(vis1, use_container_width=True)
+    vis1 = comparison_plots('funding_service')
+    st.plotly_chart(vis1, use_container_width=True)
+
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
             spacer(2)
+
+
     with col1:
         st.markdown('#### 2020 Survey')
         service_delivery_2020 = ['Changes in the level of service delivery by organisation income - 2020.png', 
                                  'Changes in the level of service delivery by service type - 2020.png',
                                  'Changes in the level of service delivery by the number of paid staff - 2020.png',
                                  'Changes in the level of service delivery by the number of volunteers - 2020.png']
-        column_builder(service_delivery_2020)                       
+        column_builder(service_delivery_2020)
+
     with col2:
         st.markdown('#### 2021 Survey')
         service_delivery_2021 = ['Changes in the level of service delivery by organisation income - 2021.png', 
