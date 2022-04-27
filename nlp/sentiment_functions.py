@@ -28,7 +28,7 @@ def get_vader_sentiment(string):
 def sentiment_groups(value):
     if value <= -0.25:
         return "Negative"
-    elif value <= 0.25:
+    elif value < 0.25:
         return "Neutral"
     else:
         return "Positive"
