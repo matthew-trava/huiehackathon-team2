@@ -158,8 +158,8 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 
 def dashboard2020():
     st.markdown("""## Dashboard 2020\n
-                On this page we will explore some basic statistics and interpretations found within the 2020 dataset alongside 
-                ***
+On this page we will explore some basic statistics and interpretations found within the 2020 dataset alongside 
+\n ***
                 """)
     with st.expander("Dashboard"):
         st.markdown("""<iframe width="1200" height="900" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
