@@ -4,47 +4,50 @@ import pandas as pd
 # import pickle5 as pickle
 from pathlib import Path
 
-pkl_path = Path(__file__).parents[1] / "joyce"
+data_path = Path(__file__).parents[1] / "joyce"
 
 
 def comparison_plots(x):
     if x == 'staff_service':
         title = "Changes to level of service delivered by number of paid staff within the organisation"
-        return comparison_heatmap(pkl_path / 'p_staff_service.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'type_service':
         title = "Changes to level of service delivered by organisation service type"
-        return comparison_heatmap(pkl_path / 'p_type_service.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'volunteers_service':
         title = "Changes to level of service delivered by number of volunteer staff within the organisation"
-        return comparison_heatmap(pkl_path / 'p_volunteers_service.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'income_service':
         title = "Changes to level of service delivered by organisation income level"
-        return comparison_heatmap(pkl_path / 'p_income_service.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'ethnic_service':
         title = "Changes to level of service delivered by organisation target ethnicity"
-        return comparison_heatmap(pkl_path / 'p_ethnic_service.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'staff_funding':
         title = "Funding reserve level by number of paid staff within the organisation"
-        return comparison_heatmap(pkl_path / 'p_staff_funding.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'type_funding':
         title = "Funding reserve level by organisation service type"
-        return comparison_heatmap(pkl_path / 'p_type_funding.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'volunteers_funding':
         title = "Funding reserve level by number of volunteer staff within the organisation"
-        return comparison_heatmap(pkl_path / 'p_volunteers_funding.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'income_funding':
         title = "Funding reserve level by organisation income level"
-        return comparison_heatmap(pkl_path / 'p_income_funding.pickle', title)
+        return comparison_heatmap(data_path, x , title)
     if x == 'ethnic_funding':
         title = "Funding reserve level by organisation target ethnicity"
-        return comparison_heatmap(pkl_path / 'p_ethnic_funding.pickle', title)
+        return comparison_heatmap(data_path, x , title)
 
 
-def comparison_heatmap(picklefilepath, title):
+def comparison_heatmap(data_path, chart_name, title):
     fig = make_subplots(rows=1, cols=2, subplot_titles=("2020", "2021"), horizontal_spacing=0.175)
-    df = pd.read_pickle(picklefilepath)
-    df20 = df.loc[2020].iloc[::-1]
-    df21 = df.loc[2021].iloc[::-1]
+    filename20 = 'c_' + chart_name + '_20.csv'
+    filename21 = 'c_' + chart_name + '_21.csv'
+    df20 = pd.read_csv(data_path / filename20, index_col=0)
+    df21 = pd.read_csv(data_path / filename21, index_col=0)
+    df20 = df20.iloc[::-1]
+    df21 = df21.iloc[::-1]
     intersection_index = df21.index & df20.index
     df20 = df20.loc[intersection_index]
     df21 = df21.loc[intersection_index]
@@ -74,6 +77,5 @@ def comparison_heatmap(picklefilepath, title):
                                   ))
     fig.update_yaxes(showticklabels=False, row=1, col=1)
     return (fig)
-# df = pd.read_csv ('users21.csv', index_col=0)
-# fig = px.imshow(df, text_auto=True, colorscale='Viridis')
-# fig.show()
+
+

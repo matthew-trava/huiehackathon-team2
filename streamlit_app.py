@@ -174,10 +174,10 @@ def yearcomparisons():
     col1, col2 = st.columns(2)
 
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("income_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("income_service"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
@@ -188,11 +188,11 @@ def yearcomparisons():
     st.markdown("***")
     st.markdown("#### Funding Resources Over the Years")
 
-    st.plotly_chart(comparison_plots("staff_funding"), use_container_width=True)
-    st.plotly_chart(comparison_plots("volunteers_funding"), use_container_width=True)
-    st.plotly_chart(comparison_plots("income_funding"), use_container_width=True)
-    st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
-    st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("staff_funding"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("volunteers_funding"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("income_funding"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
+    # st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
 
 
     _, col2, _ = st.columns(3)
