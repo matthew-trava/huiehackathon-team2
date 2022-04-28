@@ -1,22 +1,24 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import pandas as pd
+from pathlib import Path
+pkl_path = Path(__file__).parents[1] / "joyce"
 
 
 
 def comparison_plots(x):
         if x == 'staff_service':
                 title = ""
-                return comparison_heatmap('joyce/p_staff_service.pickle', title)
+                return comparison_heatmap(pkl_path  / 'p_staff_service.pickle', title)
         if x == 'type_service':
                 title = ""
-                return comparison_heatmap('joyce/p_type_service.pickle', title)
+                return comparison_heatmap(pkl_path  / 'p_type_service.pickle', title)
         if x == 'volunteers_service':
                 title = ""
-                return comparison_heatmap('joyce/p_volunteers_service.pickle', title)
+                return comparison_heatmap(pkl_path  / 'p_volunteers_service.pickle', title)
         if x == 'funding_service':
                 title = ""
-                return comparison_heatmap('joyce/p_funding_service.pickle', title)
+                return comparison_heatmap(pkl_path  / 'p_funding_service.pickle', title)
 
 def comparison_heatmap(picklefilepath, title):
         fig = make_subplots(rows=1, cols=2)
