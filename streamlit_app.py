@@ -1,5 +1,6 @@
 # Streamlit Import and Configuration
 import streamlit as st
+import streamlit.components.v1 as components
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -158,18 +159,33 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 
 def dashboard2020():
     st.markdown("""## Dashboard 2020\n
-On this page we will explore some basic statistics and interpretations found within the 2020 dataset alongside 
+On this page we will explore some basic statistics and interpretations found within the 2020 dataset.
 \n ***
                 """)
+    with st.expander("The Original Dataset and Reports"):
+        st.markdown("""Below is the page where the original survey information is found with infographics and reports if you wish to delve into it further!""")
+        components.iframe("https://www.huie.org.nz/our-work/survey-2020/", height = 400, scrolling = True)
+    with st.expander("Cross Table"):
+        column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
+        column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
+        st.dataframe(pd.crosstab(df2020()[column20_1], df2020()[column20_2]))
+        
     with st.expander("Dashboard"):
         st.markdown("""<iframe width="1200" height="900" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
                     unsafe_allow_html=True)
+    
     
      
 def dashboard2021():
     st.markdown(" ## Dashboard 2021")
     st.write("coming soon....")
-
+    with st.expander("The Original Dataset and Reports"):
+        st.markdown("""Below is the page where the original survey information is found with infographics and reports if you wish to delve into it further!""")
+        components.iframe("https://www.huie.org.nz/our-work/survey-2021/", height = 400, scrolling = True)
+    with st.expander("Cross Table"):
+        column21_1 = st.selectbox("Select the First Column", list(df2021().columns))
+        column21_2 = st.selectbox("Select the Second Column", list(df2021().columns))
+        st.dataframe(pd.crosstab(df2021()[column21_1], df2021()[column21_2]))
 # currently broken
 def yearcomparisons():
     st.write("## Year Comparisons")
