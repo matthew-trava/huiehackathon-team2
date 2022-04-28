@@ -158,7 +158,7 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 
 def dashboard2020():
     st.write("Dashboard 2020")
-    st.write("coming soon....")
+    
      
 def dashboard2021():
     st.write("Dashboard 2021")
