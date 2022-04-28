@@ -10,3 +10,5 @@ data/gis/
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/inspectionProfiles/profiles_settings.xml
+joyce/test.py
+nictest.py
