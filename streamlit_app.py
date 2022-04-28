@@ -1,6 +1,5 @@
 # Streamlit Import and Configuration
 import streamlit as st
-from joyce.nicsvis import comparison_plots
 st.set_page_config(
      page_title="Team Tūī",
      page_icon="🐦",
@@ -39,6 +38,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 import sys
 from nlp.word_cloud import word_cloud_generator
+from joyce.nicsvis import comparison_plots
 
 @st.cache
 def df2020():
@@ -48,16 +48,20 @@ def df2021():
     return pd.read_csv('data/processed/df_2021_ohe.csv')
 @st.cache
 def sentiment2020():
-    return pd.read_csv('data/processed/sentiment/2020_sentiment_subjectivity.csv', usecols = ['Field', 'Text', 'sentiment', 'sentiment_group', 'subjectivity', 'subjectivity_group'])
+    return pd.read_csv('data/processed/sentiment/sentiment_linked/2020.csv', index_col='Unnamed: 0')
 @st.cache
 def sentiment2021():
-    return pd.read_csv('data/processed/sentiment/2021_sentiment_subjectivity.csv', usecols = ['Field', 'Text', 'sentiment', 'sentiment_group', 'subjectivity', 'subjectivity_group'])
+    return pd.read_csv('data/processed/sentiment/sentiment_linked/2021.csv', index_col='Unnamed: 0')
 @st.cache
 def emotions2020():
     return pd.read_csv('data/processed/emotions/2020_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
 @st.cache
 def emotions2021():
     return pd.read_csv('data/processed/emotions/2021_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
+@st.cache
+def convert_df(df):
+   return df.to_csv().encode('utf-8')
+
 def spacer(height):
     for _ in range(height):
             st.write('\n')
@@ -160,6 +164,7 @@ def dashboard2021():
     st.write("Dashboard 2021")
     st.write("coming soon....")
 
+# currently broken
 def yearcomparisons():
     st.write("## Year Comparisons")
     st.write("""
@@ -228,10 +233,6 @@ def yearcomparisons():
                    'Staffing changes 2021.png', 'Support accessed 2021.png',
                    'Support needed 2021.png']
         column_builder(other21)
-    
-def clusteringanalysis():
-    st.write("Clustering")
-    st.write("coming soon....")
    
 def geographic():
     st.write("Geographic")
@@ -266,11 +267,30 @@ From the cloud of words you can also see common themes amongst the words and dra
         
     with st.expander("Method 2: Sentiment Analysis"):
         st.write(""" Sentiment analysis refers to the NLP technique that tries to extract whether a given word, sentence or larger block of text can be considered negative, positive or neutral in sentiment.\n
-In order to do this we used a **lexicon based approach**. This approach utilises a large dictionary of words with a given sentiment score. Sentiment scores, ranging between -1 for negative sentiment to +1 for positive sentiment, given an indication as to how negative or positive 
+In order to do this we used a **lexicon based approach**. This approach utilises a large dictionary of words with a given sentiment score. Sentiment scores, ranging between -1 for negative sentiment to +1 for positive sentiment, given an indication as to how negative or positive text is.
+
+### Two Approach\n
+A lexicon based approach is only as good as the dictionary of words it has with it's associated sentiment scores. In order to understand that often these given different results we utilise both the textblob sentiment analysis and the
+NLTK VADER (Valence Aware Dictionary for sentiment Reasoning). Both of these rule based sentiment approaches are adaptable and simple to use and transfer well to multiple types of text based data.\n
+One of the key drawbacks however is that it may not consider all similar words and their context (like an embeddings based model). \n 
+We used both methods and present however it is filtering on the textblob analysis.\n
+
+### Our Sentiment Range
+We determine a score greater than 0.25 as text that is positive in sentiment, scores between 0.25 and -0.25 as neutral, and less than -0.25 as negative.
+The more positive (negative) a value is infers that there were more words/n-grams with positive (negative) sentiment present.
+
+### Subjectivity Analysis
+A subset to the sentiment analysis we also look at subjectivity within the text present. Subjectivity refers to how emotive a text or opinionated a text may be whereas objective would be text which seems to be more rooted, or written with, factual information in mind.\n
+A score closer to 0 means the text more objective in nature and a score closer to 1 means the text is more subjective in nature.
 """)
         
     with st.expander("Method 3: Emotions Analysis"):
         st.write("""
+Beyond sentiment we endeavoured to understand the emotions present within the text itself. In order to do this we utilised a pre-trained algorithm trained on commentary data from Reddit to conclude and understand example emotions from the text data.\n
+Further details on the pre-trained model can be found at: https://huggingface.co/arpanghoshal/EmoRoBERTa/tree/main \n
+
+### Benefits of Emotions Analysis
+A key benefit to understanding emotion is that it conveys more meaning that simple sentiment. Looking at emotions like admiration, approval and optimism frame people's understandings of how they're feeling about the current and future environment more so than what sentiment can derive without contextual embeddings.
 """)
     st.markdown("***")
     
@@ -283,28 +303,41 @@ In order to do this we used a **lexicon based approach**. This approach utilises
             'opportunities: Other (please specify)', 'priorities and concerns', 'support accessed: Other (please specify)',
             'other new ways', 'comments'])
         word_cloud_generator(df2020(), [select20])
-        st.write("We note some key thematics are shown explicitly within the word clouds generated.")
+        
+        st.write("""We note some key thematics are shown explicitly within the word clouds generated. Examples of insights are as follows: \n
+**Service Delivery affect Reasons** - Lockdowns as a result of COVID appear to be the key issue faced with lots of focus towards face to face support and service to the community no longer being able to occur as a result of the restrictions. Limiting items like group work and client contact seemed to be the key themes.\n
+**Priorities and Concerns** - Key themes of funding issues and needs appeared to be the most common concern and priority. Additionally sourcing people in the form of btoh staff and volunteers in order to meet priority service requirements.\n""")
+    
+    
     with st.expander("2020 Sentiment Analysis"):
         st.markdown("""
                     On certain textual data we conducted sentiment analysis using the Pasttern Analysis calculation methodology.
                     Beyond sentiment (positive, negative, and neutral) we also calculated the relative subjectivity / objectivity of the text.\n\n
                     You can see below the numbers present for each of the categories found and are able to manipulate the filters to see the data with the assumed sentiment and polarity.""")
         st.markdown("***")
-        text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['Field'].unique()))
-        temp_sentiment20_df = sentiment2020()[sentiment2020()['Field']==text_fields20]
+        text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['category_assessed'].unique()))
+        temp_sentiment20_df = sentiment2020()[sentiment2020()['category_assessed']==text_fields20]
+        st.write(temp_sentiment20_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
-            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Positive"],"Positive",'success')
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
         with col2:
-            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Neutral"],"Neutral",'warning')
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Neutral"],"Neutral",'warning')
         with col3:
-            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group']=="Negative"],"Negative",'danger')
+            sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment20_df)
+        st.dataframe(temp_sentiment20_df[['row hash', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        
+        st.markdown("***")
+        if st.checkbox("Want to download the 2020 sentiment file for this column to analyse further?"):
+            csv = convert_df(temp_sentiment20_df)
+            st.download_button('Press to Download',
+                               csv,
+                               'sentiment.csv',
+                               'text/csv',
+                               key='download-csv')
+        
     with st.expander("2020 Emotions Analysis"):
-        st.markdown("""
-                    Emotions Analysis - TO BE POPULATED
-                    """)
         st.markdown("***")
         emotion_fields20 = st.selectbox("2020 Survey Fields", emotions2020()['Field'].unique())
         emotions20_select = st.multiselect("2020 Emotions Selections", emotions2020()['emotions'].unique(), default = 'optimism')
@@ -314,6 +347,13 @@ In order to do this we used a **lexicon based approach**. This approach utilises
             temp_emotions20_df = emotions2020()[(emotions2020()['Field'] == emotion_fields20) & (emotions2020()['emotions'].isin(emotions20_select))]
         st.metric("Total Options under Select", temp_emotions20_df.shape[0])
         st.dataframe(temp_emotions20_df)
+        if st.checkbox("Download the emotions table for 2020 for the column selected"):
+            csv = convert_df(temp_emotions20_df)
+            st.download_button('Press to Download',
+                               csv,
+                               'emotions.csv',
+                               'text/csv',
+                               key='download-csv')
         
     
     st.markdown('***')
@@ -329,27 +369,39 @@ In order to do this we used a **lexicon based approach**. This approach utilises
             'Can you please give us an example of collaboration, sharing, partnerships and/or strategic decisions your organisation has made with other organisations, groups and/or government departments (since the beginning of the COVID-19 pandemic)?',
             'Can you tell us a short story about your experiences','Is there anything else you would like to share with us or comment on'])
         word_cloud_generator(df2021(), [select21])
+        
+        st.write("""We note some key thematics are shown explicitly within the word clouds generated. Example of insights are as follows: \n
+**Concern Group: Other concerns (please specify)** - Volunteers and community appears to be the main concerns outside the selectable options. Further to that funding was reinformed inclusive of further lockdown woes and support from government and other for-profit entities. One key theme noted was time and workload required to deliver.\n""")
+    
     with st.expander("2021 Sentiment Analysis"):
         st.markdown("""
                     On certain textual data we conducted sentiment analysis using the Pasttern Analysis calculation methodology.
                     Beyond sentiment (positive, negative, and neutral) we also calculated the relative subjectivity / objectivity of the text.\n\n
                     You can see below the numbers present for each of the categories found and are able to manipulate the filters to see the data with the assumed sentiment and polarity.""")
         st.markdown("***")
-        text_fields21 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2021()['Field'].unique()))
-        temp_sentiment21_df = sentiment2021()[sentiment2021()['Field']==text_fields21]
+        text_fields21 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2021()['category_assessed'].unique()))
+        temp_sentiment21_df = sentiment2021()[sentiment2021()['category_assessed']==text_fields21]
+        st.write(temp_sentiment21_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
-            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Positive"],"Positive",'success')
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
         with col2:
-            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Neutral"],"Neutral",'warning')
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Neutral"],"Neutral",'warning')
         with col3:
-            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group']=="Negative"],"Negative",'danger')
+            sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment21_df) 
+        st.dataframe(temp_sentiment21_df[['Respondent ID', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        
+        st.markdown("***")
+        if st.checkbox("Want to download the 2021 sentiment file for this column to analyse further?"):
+            csv = convert_df(temp_sentiment21_df)
+            st.download_button('Press to Download',
+                               csv,
+                               'sentiment.csv',
+                               'text/csv',
+                               key='download-csv')
+        
     with st.expander("2021 Emotions Analysis"):
-        st.markdown("""
-                    Emotions Analysis - TO BE POPULATED
-                    """)
         st.markdown("***")
         emotion_fields21 = st.selectbox("2021 Survey Fields", emotions2021()['Field'].unique())
         emotions21_select = st.multiselect("2021 Emotions Selections", emotions2021()['emotions'].unique(), default = 'optimism')
@@ -359,6 +411,13 @@ In order to do this we used a **lexicon based approach**. This approach utilises
             temp_emotions21_df = emotions2021()[(emotions2021()['Field'] == emotion_fields21) & (emotions2021()['emotions'].isin(emotions21_select))]
         st.metric("Total Options under Select", temp_emotions21_df.shape[0])
         st.dataframe(temp_emotions21_df)
+        if st.checkbox("Download the emotions table for 2021 for the column selected"):
+            csv = convert_df(temp_emotions21_df)
+            st.download_button('Press to Download',
+                               csv,
+                               'emotions.csv',
+                               'text/csv',
+                               key='download-csv')
         
 def recommendations():
     st.write("Recommendations")
@@ -375,11 +434,11 @@ def main():
         st.title("Navigator")
         st.write(
             """
-            #### This sidebar will allow you to navigate information not only about HuiE but also about the data analysis conducted and some of the insights drawn from the survey data over the past 2 years.
+            #### This sidebar will allow you to navigate information not only about Hui E but also about the data analysis conducted and some of the insights drawn from the survey data over the past 2 years.
             _____
             """)
         page = st.radio("Select the page you want to explore!", 
-                        ['Home', '2020 Summary', '2021 Summary', 'Year-to-Year Comparisons','Clustering Analysis',
+                        ['Home', '2020 Summary', '2021 Summary', 'Year-to-Year Comparisons',
                          'Geographic Analysis','Natural Language Processing','Recommendations'])
         st.write("_____")
         st.sidebar.write("""
@@ -396,8 +455,6 @@ def main():
         dashboard2021()
     elif page == "Year-to-Year Comparisons":
         yearcomparisons()
-    elif page == "Clustering Analysis":
-        clusteringanalysis()
     elif page == "Geographic Analysis":
         geographic()
     elif page == "Natural Language Processing":
