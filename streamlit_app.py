@@ -182,20 +182,7 @@ def yearcomparisons():
         for item in lst:
             st.image(f"joyce/{item}")
             spacer(2)
-    with col1:
-        st.markdown('#### 2020 Survey')
-        service_delivery_2020 = ['Changes in the level of service delivery by organisation income - 2020.png', 
-                                 'Changes in the level of service delivery by service type - 2020.png',
-                                 'Changes in the level of service delivery by the number of paid staff - 2020.png',
-                                 'Changes in the level of service delivery by the number of volunteers - 2020.png']
-        column_builder(service_delivery_2020)                       
-    with col2:
-        st.markdown('#### 2021 Survey')
-        service_delivery_2021 = ['Changes in the level of service delivery by organisation income - 2021.png', 
-                                 'Changes in the level of service delivery by service type - 2021.png',
-                                 'Changes in the level of service delivery by the number of paid staff - 2021.png',
-                                 'Changes in the level of service delivery by the number of volunteers - 2021.png']
-        column_builder(service_delivery_2021)
+
     _, col2, _ = st.columns(3)
     col2.image('joyce/Changes in the level of service delivery over time.png')
     st.markdown("***")
