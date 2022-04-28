@@ -174,10 +174,10 @@ def yearcomparisons():
     col1, col2 = st.columns(2)
 
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
     st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
-    st.plotly_chart(comparison_plots("funding_service"), use_container_width=True)
-
+    st.plotly_chart(comparison_plots("income_service"), use_container_width=True)
+    st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
+    st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
@@ -187,25 +187,18 @@ def yearcomparisons():
     col2.image('joyce/Changes in the level of service delivery over time.png')
     st.markdown("***")
     st.markdown("#### Funding Resources Over the Years")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown('#### 2020 Survey')
-        funding_2020 = ['Funding reserve level by organisation income - 2020.png',
-                        'Funding reserve level by service type - 2020.png',
-                        'Funding reserve level by the number of paid staff - 2020.png',
-                        'Funding reserve level by the number of volunteers - 2020.png']
-        column_builder(funding_2020)
-    with col2:
-        st.markdown('#### 2021 Survey')
-        funding_2021 = ['Funding reserve level by organisation income - 2021.png',
-                        'Funding reserve level by service type - 2021.png',
-                        'Funding reserve level by the number of paid staff - 2021.png',
-                        'Funding reserve level by the number of volunteers - 2021.png']
-        column_builder(funding_2021)
+
+    st.plotly_chart(comparison_plots("staff_funding"), use_container_width=True)
+    st.plotly_chart(comparison_plots("volunteers_funding"), use_container_width=True)
+    st.plotly_chart(comparison_plots("income_funding"), use_container_width=True)
+    st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
+    st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
+
+
     _, col2, _ = st.columns(3)
     col2.image('joyce/Funding reserve levels over time.png')
     st.markdown("***")
-    
+
     # Further comparisons
     col1, col2 = st.columns(2)
     with col1:
