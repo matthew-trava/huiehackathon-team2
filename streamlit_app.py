@@ -40,6 +40,7 @@ from nltk.corpus import stopwords
 import sys
 from nlp.word_cloud import word_cloud_generator
 from joyce.nicsvis import comparison_plots
+from scipy import stats
 
 @st.cache
 def df2020():
@@ -168,7 +169,11 @@ On this page we will explore some basic statistics and interpretations found wit
     with st.expander("Cross Table"):
         column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
         column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
-        st.dataframe(pd.crosstab(df2020()[column20_1], df2020()[column20_2]))
+        crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
+        st.dataframe(crosstab20)
+        chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
+        st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
+        
         
     with st.expander("Dashboard"):
         st.markdown("""<iframe width="1200" height="900" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
@@ -185,7 +190,10 @@ def dashboard2021():
     with st.expander("Cross Table"):
         column21_1 = st.selectbox("Select the First Column", list(df2021().columns))
         column21_2 = st.selectbox("Select the Second Column", list(df2021().columns))
-        st.dataframe(pd.crosstab(df2021()[column21_1], df2021()[column21_2]))
+        crosstab21 = pd.crosstab(df2021()[column21_1], df2021()[column21_2])
+        st.dataframe(crosstab21)
+        chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
+        st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
 # currently broken
 def yearcomparisons():
     st.write("## Year Comparisons")
