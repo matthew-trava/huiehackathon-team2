@@ -157,11 +157,17 @@ Going through each of the **6 pages** you'll observe our findings and insights w
             spacer(1)
 
 def dashboard2020():
-    st.write("Dashboard 2020")
+    st.markdown("""## Dashboard 2020\n
+                On this page we will explore some basic statistics and interpretations found within the 2020 dataset alongside 
+                ***
+                """)
+    with st.expander("Dashboard"):
+        st.markdown("""<iframe width="1200" height="900" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
+                    unsafe_allow_html=True)
     
      
 def dashboard2021():
-    st.write("Dashboard 2021")
+    st.markdown(" ## Dashboard 2021")
     st.write("coming soon....")
 
 # currently broken
@@ -215,7 +221,7 @@ def yearcomparisons():
         column_builder(other21)
    
 def geographic():
-    st.write("Geographic")
+    st.markdown(" ## Geographic")
     st.write("coming soon....")
     
 def nlpanalysis():
@@ -400,7 +406,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
                                key='download-csv')
         
 def recommendations():
-    st.write("Recommendations")
+    st.markdown("## Recommendations")
     st.write("coming soon....")
 
 def main():
