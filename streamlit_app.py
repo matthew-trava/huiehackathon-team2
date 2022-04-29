@@ -60,6 +60,7 @@ def emotions2020():
 @st.cache
 def emotions2021():
     return pd.read_csv('data/processed/emotions/2021_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
+
 @st.cache
 def convert_df(df):
    return df.to_csv().encode('utf-8')
@@ -166,6 +167,7 @@ On this page we will explore some basic statistics and interpretations found wit
     with st.expander("The Original Dataset and Reports"):
         st.markdown("""Below is the page where the original survey information is found with infographics and reports if you wish to delve into it further!""")
         components.iframe("https://www.huie.org.nz/our-work/survey-2020/", height = 400, scrolling = True)
+    
     with st.expander("Cross Table"):
         column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
         column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
@@ -176,14 +178,14 @@ On this page we will explore some basic statistics and interpretations found wit
         
         
     with st.expander("Dashboard"):
-        st.markdown("""<iframe width="1200" height="900" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
+        st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
                     unsafe_allow_html=True)
-    
-    
-     
+      
 def dashboard2021():
-    st.markdown(" ## Dashboard 2021")
-    st.write("coming soon....")
+    st.markdown("""## Dashboard 2021\n
+On this page we will explore some basic statistics and interpretations found within the 2021 dataset.
+\n ***
+                """)
     with st.expander("The Original Dataset and Reports"):
         st.markdown("""Below is the page where the original survey information is found with infographics and reports if you wish to delve into it further!""")
         components.iframe("https://www.huie.org.nz/our-work/survey-2021/", height = 400, scrolling = True)
@@ -194,7 +196,10 @@ def dashboard2021():
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
         st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
-# currently broken
+    with st.expander("Dashboard"):
+        st.markdown("""""", unsafe_allow_html=True)
+        
+
 def yearcomparisons():
     st.write("## Year Comparisons")
     st.write("""
@@ -204,10 +209,15 @@ def yearcomparisons():
     col1, col2 = st.columns(2)
 
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("income_service"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
+    spacer(2)
     def column_builder(lst):
         for item in lst:
             st.image(f"joyce/{item}")
