@@ -189,10 +189,9 @@ On this page we will explore some basic statistics and interpretations found wit
         st.dataframe(crosstab20)
         chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
         st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
-        
-        
-    with st.expander("Dashboard"):
-        st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
+   
+    st.markdown("*** \n Dashboard")
+    st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
                     unsafe_allow_html=True)
       
 def dashboard2021():
@@ -210,8 +209,8 @@ On this page we will explore some basic statistics and interpretations found wit
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
         st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
-    with st.expander("Dashboard"):
-        st.markdown("""""", unsafe_allow_html=True)
+    st.markdown("*** \n Dashboard")
+    st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/7939942b-f2b8-4c3c-9944-fb69a2309cd2/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""", unsafe_allow_html=True)
         
 
 def yearcomparisons():
@@ -250,7 +249,7 @@ def yearcomparisons():
     spacer(2)
     st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
     st.markdown("***")
-    st.markdown('#### Furthur Comparisons')
+    st.markdown('#### Further Comparisons')
     st.plotly_chart(comparison_plots("sector_changes"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("service_changes"), use_container_width=True)
@@ -468,7 +467,7 @@ def main():
                          'Geographic Analysis','Natural Language Processing','Recommendations'])
         st.write("_____")
         st.sidebar.write("""
-        Team Members: Matthew, Joyce, Cynthia, Nicolas, & Raul
+        Team Members: Matthew, Joyce, Nicolas, Raul, & Cynthia
         \n Advisors: Shreyank & Shakeel
     _____""")
     
