@@ -44,6 +44,21 @@ def comparison_plots(x):
     if x == 'bar_funding':
         title = "Distribution of funding reserve levels"
         return comparison_gbarchart(data_path, x , title)
+    if x == 'sector_changes':
+        title = "Sector Changes"
+        return comparison_gbarchart(data_path, x , title)
+    if x == 'service_changes':
+        title = "Service Delivery Changes"
+        return comparison_gbarchart(data_path, x , title)
+    if x == 'staff_changes':
+        title = "Staff Changes"
+        return comparison_gbarchart(data_path, x , title)
+    if x == 'support_accessed':
+        title = "Support Services Accessed"
+        return comparison_gbarchart(data_path, x , title)
+    if x == 'support_needed':
+        title = "Support Services Needed"
+        return comparison_gbarchart(data_path, x , title)
 
 def comparison_heatmap(data_path, chart_name, title):
     fig = make_subplots(rows=1, cols=2, subplot_titles=("2020", "2021"), horizontal_spacing=0.175)
@@ -108,5 +123,6 @@ def comparison_gbarchart(data_path, chart_name, title):
 
     fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',
                       plot_bgcolor='rgba(0,0,0,0)',
-                      coloraxis={'colorscale': 'BuPu'})
+                      coloraxis={'colorscale': 'BuPu'},
+                      title_text=title)
     return(fig)
