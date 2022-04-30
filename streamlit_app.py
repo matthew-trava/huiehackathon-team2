@@ -355,7 +355,6 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         st.markdown("***")
         text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['category_assessed'].unique()))
         temp_sentiment20_df = sentiment2020()[sentiment2020()['category_assessed']==text_fields20]
-        st.write(temp_sentiment20_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
             sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
@@ -364,7 +363,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         with col3:
             sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment20_df[['row hash', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        st.dataframe(temp_sentiment20_df[['row hash', 'category_assessed',text_fields20,'sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
         
         st.markdown("***")
         if st.checkbox("Want to download the 2020 sentiment file for this column to analyse further?"):
@@ -428,7 +427,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         with col3:
             sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment21_df[['Respondent ID', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        st.dataframe(temp_sentiment21_df[['Respondent ID', 'category_assessed',text_fields21,'sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
         
         st.markdown("***")
         if st.checkbox("Want to download the 2021 sentiment file for this column to analyse further?"):
