@@ -1,5 +1,6 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import plotly.express as px
 import pandas as pd
 from pathlib import Path
 
@@ -37,7 +38,12 @@ def comparison_plots(x):
     if x == 'ethnic_funding':
         title = "Funding reserve level by organisation target ethnicity"
         return comparison_heatmap(data_path, x , title)
-
+    if x == 'bar_service':
+        title = "Distribution of changes to level of service delivered"
+        return comparison_gbarchart(data_path, x , title)
+    if x == 'bar_funding':
+        title = "Distribution of funding reserve levels"
+        return comparison_gbarchart(data_path, x , title)
 
 def comparison_heatmap(data_path, chart_name, title):
     fig = make_subplots(rows=1, cols=2, subplot_titles=("2020", "2021"), horizontal_spacing=0.175)
@@ -78,3 +84,29 @@ def comparison_heatmap(data_path, chart_name, title):
     return (fig)
 
 
+def comparison_gbarchart(data_path, chart_name, title):
+    filename = 'c_' + chart_name + '.csv'
+    df = pd.read_csv(data_path / filename, index_col=0)
+    # fig = px.histogram(df, x="category", y="percentage",
+    #              color='year', barmode='group',
+    #              height=800, title=title, )
+    df20=df[df['year'] == 2020]
+    df21=df[df['year'] == 2021]
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=df20["category"],
+        y=df20["percentage"],
+        name='2020',
+        marker=dict(color='rgba(55, 53, 87 ,250)'),
+    ))
+    fig.add_trace(go.Bar(
+        x=df21["category"],
+        y=df21["percentage"],
+        name='2021',
+        marker=dict(color='rgba(237, 19, 92 ,250)'),
+    ))
+
+    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                      plot_bgcolor='rgba(0,0,0,0)',
+                      coloraxis={'colorscale': 'BuPu'})
+    return(fig)
