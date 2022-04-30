@@ -42,6 +42,7 @@ from nlp.word_cloud import word_cloud_generator
 from joyce.nicsvis import comparison_plots
 from scipy import stats
 
+# Loading the relevant databases with caching
 @st.cache
 def df2020():
     return pd.read_csv('data/processed/df_2020_ohe.csv')
@@ -61,15 +62,19 @@ def emotions2020():
 def emotions2021():
     return pd.read_csv('data/processed/emotions/2021_emotions.csv', usecols = ['Field', 'text', 'emotions', 'score'])
 
+# Making the relevant dataframe for exporting upon dynamic creation in emotion exporting
 @st.cache
 def convert_df(df):
    return df.to_csv().encode('utf-8')
 
+# function to create gaps between graphs
 def spacer(height):
     for _ in range(height):
             st.write('\n')
 
+# the cards template for sentiment scoring
 def sentiment_cards(data,title,colour):
+    """Making Sentiment Score Cards using Bootstrap"""
     st.markdown(f"""
 <head>
     <!-- Required meta tags -->
@@ -92,7 +97,8 @@ def home():
     st.write(
         """### Welcome to Team Tūī's Hackathon submission!
 As part of our submission we've produced a series of analysis broken down into **5 key areas**.
-Going through each of the **6 pages** you'll observe our findings and insights written alongside the graphs and imagery produced.
+Going through each of the **6 pages** you'll observe our findings and insights written alongside the graphs and imagery produced.\n
+In the recommendations page we highlight some key findings and some areas to improving/updating the collection process, and potential other avenues of development.
              """)
     
     col1, col2, col3 = st.columns(3)
@@ -115,6 +121,8 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         st.write("Utilising a series of machine learning capabilities to understand entities within the text but also categorise similar comments/worded responses")
 
     st.write("___")
+    
+    # Identifying the information that backs the hackathon
     with st.expander("Hackathon Backing Data"):
         col1, col2 = st.columns(2)
         with col1:
@@ -122,12 +130,13 @@ Going through each of the **6 pages** you'll observe our findings and insights w
 [Dataset](https://www.huie.org.nz/survey-2020/download-the-time-to-shine-survey-dataset/) \n 
 [Infographic](https://www.huie.org.nz/wp-content/uploads/COVID-19-Impact-Sector-Survey-Infographic.pdf) \n 
 [Full Report](https://www.huie.org.nz/wp-content/uploads/Time-to-Shine-_COVID19-Impact-Community-Survey-Report.pdf)""")
-    with col2:
+        with col2:
             st.write("""2021 Survey Data \n
 [Dataset](https://www.huie.org.nz/wp-content/uploads/COVID-Hauora-Wellbeing-Survey-dataset-291021.csv)\n
 [Slides](https://www.huie.org.nz/wp-content/uploads/COVID-19-Hauora-Wellbeing-Research-slides.pdf)\n
 [Full Report](https://www.huie.org.nz/wp-content/uploads/COVID-19-Hauora-Wellbeing-Report-2021.pdf)""")
     
+    # Explaining where our team name comes from and it's origins and links to NZ
     with st.expander("Our Team Name"):
         left, right = st.columns([3,1])
         left.write("""
@@ -144,6 +153,7 @@ Going through each of the **6 pages** you'll observe our findings and insights w
         """)
         right.image("https://i.pinimg.com/564x/27/84/79/278479a3a96b07e562fcba3f5d126a86.jpg")
         
+    # High level explanation of GDI
     with st.expander("The Good Data Institute"):
         col1, col2 = st.columns([4,1])
         with col1:
@@ -159,7 +169,9 @@ Going through each of the **6 pages** you'll observe our findings and insights w
             st.image('assets/gdi-logo.png')
             spacer(1)
 
+# making the 2020 dashboards
 def dashboard2020():
+    """Our First Exploratory Data Analysis page for 2020 survey data"""
     st.markdown("""## Dashboard 2020\n
 On this page we will explore some basic statistics and interpretations found within the 2020 dataset.
 \n ***
@@ -169,6 +181,8 @@ On this page we will explore some basic statistics and interpretations found wit
         components.iframe("https://www.huie.org.nz/our-work/survey-2020/", height = 400, scrolling = True)
     
     with st.expander("Cross Table"):
+        st.markdown("""For options that are a yes or no style response they have been represented by a 1 and 0. A value of 1 indicates that
+    indicates that""")
         column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
         column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
