@@ -214,11 +214,6 @@ On this page we will explore some basic statistics and interpretations found wit
         
 
 def yearcomparisons():
-    def column_builder(lst):
-        for item in lst:
-            st.image(f"joyce/{item}")
-            spacer(2)
-
     st.write("## Year Comparisons")
     st.write("""
              We explore the changes occuring over the years throughout the two surveys collected by presenting the information
@@ -445,8 +440,8 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
                                key='download-csv')
         
 def recommendations():
-    st.markdown("## Recommendations")
-    st.write("coming soon....")
+    st.markdown("## Recommendations & Stories")
+    st.markdown("""""")
 
 def main():
     # base header
@@ -464,7 +459,7 @@ def main():
             """)
         page = st.radio("Select the page you want to explore!", 
                         ['Home', '2020 Summary', '2021 Summary', 'Year-to-Year Comparisons',
-                         'Geographic Analysis','Natural Language Processing','Recommendations'])
+                         'Geographic Analysis','Natural Language Processing','Recommendations & Stories'])
         st.write("_____")
         st.sidebar.write("""
         Team Members: Matthew, Joyce, Nicolas, Raul, & Cynthia
