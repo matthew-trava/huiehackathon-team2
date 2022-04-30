@@ -215,13 +215,19 @@ On this page we will explore some basic statistics and interpretations found wit
         
 
 def yearcomparisons():
+    def column_builder(lst):
+        for item in lst:
+            st.image(f"joyce/{item}")
+            spacer(2)
+
     st.write("## Year Comparisons")
     st.write("""
              We explore the changes occuring over the years throughout the two surveys collected by presenting the information
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
     col1, col2 = st.columns(2)
-
+    st.plotly_chart(comparison_plots("bar_service"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
@@ -231,27 +237,25 @@ def yearcomparisons():
     st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
+
+
+
+
+    st.markdown("#### Funding Reserves Over the Years")
+    st.plotly_chart(comparison_plots("bar_funding"), use_container_width=True)
     spacer(2)
-    def column_builder(lst):
-        for item in lst:
-            st.image(f"joyce/{item}")
-            spacer(2)
-
-    _, col2, _ = st.columns(3)
-    col2.image('joyce/Changes in the level of service delivery over time.png')
-    st.markdown("***")
-    st.markdown("#### Funding Resources Over the Years")
-
     st.plotly_chart(comparison_plots("staff_funding"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("volunteers_funding"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("income_funding"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
+    spacer(2)
     st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
 
 
-    _, col2, _ = st.columns(3)
-    col2.image('joyce/Funding reserve levels over time.png')
-    st.markdown("***")
+
 
     # Further comparisons
     col1, col2 = st.columns(2)
