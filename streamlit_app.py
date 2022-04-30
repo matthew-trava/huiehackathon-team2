@@ -254,23 +254,17 @@ def yearcomparisons():
     spacer(2)
     st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
 
+    st.markdown('#### Furthur Comparisons')
+    st.plotly_chart(comparison_plots("sector_changes"), use_container_width=True)
+    spacer(2)
+    st.plotly_chart(comparison_plots("service_changes"), use_container_width=True)
+    spacer(2)
+    st.plotly_chart(comparison_plots("staff_changes"), use_container_width=True)
+    spacer(2)
+    st.plotly_chart(comparison_plots("support_accessed"), use_container_width=True)
+    spacer(2)
+    st.plotly_chart(comparison_plots("support_needed"), use_container_width=True)
 
-
-
-    # Further comparisons
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown('#### 2020 Survey')
-        other20 = ['Sector changes 2020.png', 'Services changes 2020.png',
-                   'Staffing changes 2020.png', 'Support accessed 2020.png',
-                   'Support needed 2020.png']
-        column_builder(other20)
-    with col2:
-        st.markdown('#### 2021 Survey')
-        other21 = ['Sector changes 2021.png', 'Services changes 2021.png',
-                   'Staffing changes 2021.png', 'Support accessed 2021.png',
-                   'Support needed 2021.png']
-        column_builder(other21)
    
 def geographic():
     st.markdown(" ## Geographic")
