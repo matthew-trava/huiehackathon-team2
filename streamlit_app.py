@@ -225,7 +225,6 @@ def yearcomparisons():
              We explore the changes occuring over the years throughout the two surveys collected by presenting the information
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
-    col1, col2 = st.columns(2)
     st.plotly_chart(comparison_plots("bar_service"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
@@ -237,10 +236,7 @@ def yearcomparisons():
     st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
-
-
-
-
+    st.markdown("***")
     st.markdown("#### Funding Reserves Over the Years")
     st.plotly_chart(comparison_plots("bar_funding"), use_container_width=True)
     spacer(2)
@@ -253,7 +249,7 @@ def yearcomparisons():
     st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
     spacer(2)
     st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
-
+    st.markdown("***")
     st.markdown('#### Furthur Comparisons')
     st.plotly_chart(comparison_plots("sector_changes"), use_container_width=True)
     spacer(2)
@@ -412,7 +408,6 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         st.markdown("***")
         text_fields21 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2021()['category_assessed'].unique()))
         temp_sentiment21_df = sentiment2021()[sentiment2021()['category_assessed']==text_fields21]
-        st.write(temp_sentiment21_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
             sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
