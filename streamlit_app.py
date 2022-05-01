@@ -26,6 +26,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import nltk
+from PIL import Image
 @st.cache()
 def nltk_downloads():
     nltk.download('stopwords')
@@ -258,8 +259,21 @@ def yearcomparisons():
    
 def geographic():
     st.markdown(" ## Geographic")
-    st.write("Here we analyse parcipation and its local impact from a geographical point of view")
+    st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
+    # define paths to images
+    fp_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
+    fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
+    fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
+
+    # write images
+    st.image(fp_particip_2020)
+    st.image(fp_gis_particip_2021)
+    st.image(fp_gis_gdp_pc)
+
+    
+
+
 def nlpanalysis():
     st.write("## Natural Language Processing")
     st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
