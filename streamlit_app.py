@@ -478,7 +478,36 @@ In particular, the geographic analysis would be more consistent if it was transl
 Integrating branching and logic within the survey allows for unique understanding to occur. This will also prevent data overlaps from occuring due to clashing questions such as in the example shown below.
 """)
         st.markdown("""<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerf6-IDaHCzM3Q1FjYJl6z6ab0o_PjiCbHYpAXSCcPh2QLDA/viewform?embedded=true" width="640" height="563" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>""", unsafe_allow_html=True)
-    
+        st.markdown("""
+#### Different Data Export Methods
+By exporting the data from the survey collection tool into formats like *JSON* it will allow for hierarchal structuring and easier analysis of multi-choice data analysis. This allows for easier visualisation of choices made by each charity with fewer required data transformations to make it easily understandable. JSON can also be interpreted from dashboard builders, limiting barrier to use by other individuals.
+""")
+        st.json("""{
+	"id": "ABCDEFG",
+	"type": "Charitable Trust",
+	"name": "Charity of NZ",
+	"Staff": "1-5 Staff",
+	"Regions":
+		{
+			"Regions":
+				[
+					{ "id": "1", "area": "Waikato" },
+					{ "id": "2", "area": "Auckland" },
+					{ "id": "3", "areas": "Wellington" }
+				],
+	"Other Countries":
+				[
+					{ "id": "C1", "country": "Australia" },
+					{ "id": "C2", "country": "Indonesia" }
+				]
+		},
+	"Main Concerns":
+		[
+			{ "id": "M1", "concern": "Volunteer Numbers", "priority": 1},
+			{ "id": "M2", "concern": "Mental Health Services", "priority": 2},
+			{ "id": "M3", "concern": "Funding", "priority": 3}
+		]
+  }""")
     with st.expander("Areas of Further Exploration"):
         st.markdown("")
 
