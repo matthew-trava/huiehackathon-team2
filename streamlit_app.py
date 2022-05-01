@@ -26,6 +26,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import nltk
+from PIL import Image
 @st.cache()
 def nltk_downloads():
     nltk.download('stopwords')
@@ -96,6 +97,7 @@ def home():
 
     st.write(
         """### Welcome to Team Tūī's Hackathon submission!
+Our team has produced an analytics web application to analyse the recovery of the NFP sector in Aotearoa New Zealand. This application is open source and available in the public domain. You can access the source code in [Team Tui’s Github repo](https://github.com/matthew-trava/huiehackathon-team2). \n 
 As part of our submission we've produced a series of analysis broken down into **5 key areas**.
 Going through each of the **6 pages** you'll observe our findings and insights written alongside the graphs and imagery produced.\n
 In the recommendations page we highlight some key findings and some areas to improving/updating the collection process, and potential other avenues of development.
@@ -181,18 +183,16 @@ On this page we will explore some basic statistics and interpretations found wit
         components.iframe("https://www.huie.org.nz/our-work/survey-2020/", height = 400, scrolling = True)
     
     with st.expander("Cross Table"):
-        st.markdown("""For options that are a yes or no style response they have been represented by a 1 and 0. A value of 1 indicates that
-    indicates that""")
+        st.markdown("""For options that are a yes or no style response they have been represented by a 1 and 0. A value of 1 indicates that it has been selected, whereas 0 indicates it has not been selected.""")
         column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
         column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
         st.dataframe(crosstab20)
         chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
         st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
-        
-        
-    with st.expander("Dashboard"):
-        st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
+   
+    st.markdown("*** \n Dashboard")
+    st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
                     unsafe_allow_html=True)
       
 def dashboard2021():
@@ -210,22 +210,16 @@ On this page we will explore some basic statistics and interpretations found wit
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
         st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
-    with st.expander("Dashboard"):
-        st.markdown("""""", unsafe_allow_html=True)
+    st.markdown("*** \n Dashboard")
+    st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/7939942b-f2b8-4c3c-9944-fb69a2309cd2/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""", unsafe_allow_html=True)
         
 
 def yearcomparisons():
-    def column_builder(lst):
-        for item in lst:
-            st.image(f"joyce/{item}")
-            spacer(2)
-
     st.write("## Year Comparisons")
     st.write("""
              We explore the changes occuring over the years throughout the two surveys collected by presenting the information
              side by side.\n\n\n***""")
     st.markdown("#### Changes in Service Delivery Over the Years")
-    col1, col2 = st.columns(2)
     st.plotly_chart(comparison_plots("bar_service"), use_container_width=True)
     st.markdown('<div style="text-align: center">  2020 showed significant cuts, 2021 showed a normal distribution leanign towards increases </div>', unsafe_allow_html=True)
     spacer(2)
@@ -252,6 +246,7 @@ def yearcomparisons():
     st.markdown(
         '<div style="text-align: center">  Housing and sexual violence services showed significant recovery in 2021 </div>',
         unsafe_allow_html=True)
+
 
     st.markdown("#### Funding Reserves Over the Years")
     st.plotly_chart(comparison_plots("bar_funding"), use_container_width=True)
@@ -314,8 +309,26 @@ def yearcomparisons():
    
 def geographic():
     st.markdown(" ## Geographic")
-    st.write("coming soon....")
+    st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
+    # define paths to images
+    fp_gis_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
+    fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
+    fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
+
+    # write images with year option
+    gis_option = st.radio("Year", 
+                        ['2020', '2021'])
+
+    cols = st.columns(2)
+    #st.write("_____")
+    if gis_option == '2020':
+        cols[0].image(fp_gis_particip_2020)
+    elif gis_option == '2021': 
+        cols[0].image(fp_gis_particip_2021)
+    
+    cols[1].image(fp_gis_gdp_pc)
+
 def nlpanalysis():
     st.write("## Natural Language Processing")
     st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
@@ -395,7 +408,6 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         st.markdown("***")
         text_fields20 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2020()['category_assessed'].unique()))
         temp_sentiment20_df = sentiment2020()[sentiment2020()['category_assessed']==text_fields20]
-        st.write(temp_sentiment20_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
             sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
@@ -404,7 +416,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         with col3:
             sentiment_cards(temp_sentiment20_df[temp_sentiment20_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment20_df[['row hash', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        st.dataframe(temp_sentiment20_df[['row hash', 'category_assessed',text_fields20,'sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
         
         st.markdown("***")
         if st.checkbox("Want to download the 2020 sentiment file for this column to analyse further?"):
@@ -459,7 +471,6 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         st.markdown("***")
         text_fields21 = st.selectbox('Select your question to see the resulting sentiment', list(sentiment2021()['category_assessed'].unique()))
         temp_sentiment21_df = sentiment2021()[sentiment2021()['category_assessed']==text_fields21]
-        st.write(temp_sentiment21_df.head())
         col1, col2, col3 = st.columns([2,2,2])
         with col1:
             sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Positive"],"Positive",'success')
@@ -468,7 +479,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         with col3:
             sentiment_cards(temp_sentiment21_df[temp_sentiment21_df['sentiment_group_textblob']=="Negative"],"Negative",'danger')
         
-        st.dataframe(temp_sentiment21_df[['Respondent ID', 'category_assessed','sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
+        st.dataframe(temp_sentiment21_df[['Respondent ID', 'category_assessed',text_fields21,'sentiment_score_textblob', 'sentiment_group_textblob','sentiment_score_vader', 'sentiment_group_vader','sentiment_differences', 'subjectivity_score', 'subjectivity_group']])
         
         st.markdown("***")
         if st.checkbox("Want to download the 2021 sentiment file for this column to analyse further?"):
@@ -498,8 +509,99 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
                                key='download-csv')
         
 def recommendations():
-    st.markdown("## Recommendations")
-    st.write("coming soon....")
+    st.markdown("## Recommendations & Stories")
+    st.markdown("""Throughout this hackathon we've seen both interesting stories of perseverance and struggle come from the charities surveyed.\n
+Alongside the stories there are a series of recommendations that we believe could improve the understanding and ecosystem that exists within Aotearoa/New Zealand\n
+***""")
+    st.markdown("#### Stories")
+    st.markdown("""
+Throughout exploring the data we saw stories of struggle and hardship from a series of volunteers with emotions of nervousness, sadness and disappointment as noted through our emotions analysis for the 202o survey. \n 
+Some key quotes we identified were:
+> I'm on heart medication for stress directly related to the effects of Covid and keeping the doors open to meet the needs of our families, stakeholders and staff \n 
+> The stress levels have risen so high and I have been put on Oxygen Therapy to cope in the meantime. \n 
+Alongside these stories from the 2020 Survey we saw signs/signals of recovery from the year-to-year comparison we did but also through the increased levels of optimism and positivity. \n 
+Our year-to-year comparisons painted a picture of opportunity and service and funding recovery. \n
+We not only see renewed confidence throughout the comparisons from the 2020 to the 2021 survey results but could also see this directly through the quotes and words from the survey responders such as:
+> We as an organisation needed to fine tune our direct communication with tangata, in doing so, we realised that us reaching out to tangata fast tracked us to being real and follow through with words into realistic action. Worked hard at assisting people to be supported in their growing independence. We saw people becoming more resilient and self-reliant as a result. Quite a few people are no longer requiring our services as they saw an opportunity to change their lives and thrive by seizing new opportunities such as training and employment. The positive results with some people completely blew us out of the water. I think we have grown as a team and are working with people more dynamically, creatively, flexibly and delivering services to people's individual needs. \n
+
+As a result of these stories we saw opportunities for improvement in services for supporting charity organisations through mental health services as we saw them struggle even during the recovery phases in 2021. \n
+These types of services would allow volunteers and paid staff of charity organisations to better support their patrons and communities of which they serve.""")
+    st.markdown("***")
+    st.markdown("### Recommendations")
+    with st.expander("Data Collection"):
+        st.markdown("""
+As we explored the data we noted some areas that the survey collection process could be streamlined and survey data made more coherent. This includes consistent questions over time, logic within the surveys, and different data export methods. \n 
+*** \n
+#### Consistent Questions Over Time
+By comparing the 2020 to the 2021 survey we noticed that some of the data is inconsistent in terms of the questions asked. This was noticed more closely with the breadth of questions expanding in 2021 to including multi-choice challenges and ongoing concern selection and the geographic data. \n 
+By making the questions the same, or easily comparable, throughout future surveys it will allow for more consistent analysis of changes, improvements, recovery or downfall into the future for these charities. \n
+In particular, the geographic analysis would be more consistent if it was translated into a common set of parameters for the NZ geography in alignment with the NZ Geographic data provided from the Government to allow ease of comparability between density data from NZ such as population densities and GDP densities as well as other quality of life information like crime rates and services in an easy to develop manner with little to no manual data transformation. \n 
+
+#### Logic within the Survey
+Integrating branching and logic within the survey allows for unique understanding to occur. This will also prevent data overlaps from occuring due to clashing questions such as in the example shown below.
+""")
+        st.markdown("""<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerf6-IDaHCzM3Q1FjYJl6z6ab0o_PjiCbHYpAXSCcPh2QLDA/viewform?embedded=true" width="640" height="563" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>""", unsafe_allow_html=True)
+        st.markdown("""
+#### Different Data Export Methods
+By exporting the data from the survey collection tool into formats like *JSON* it will allow for hierarchal structuring and easier analysis of multi-choice data analysis. This allows for easier visualisation of choices made by each charity with fewer required data transformations to make it easily understandable. JSON can also be interpreted from dashboard builders, limiting barrier to use by other individuals.
+""")
+        st.json("""{
+	"id": "ABCDEFG",
+	"type": "Charitable Trust",
+	"name": "Charity of NZ",
+	"Staff": "1-5 Staff",
+	"Regions":
+		{
+			"Regions":
+				[
+					{ "id": "1", "area": "Waikato" },
+					{ "id": "2", "area": "Auckland" },
+					{ "id": "3", "areas": "Wellington" }
+				],
+	"Other Countries":
+				[
+					{ "id": "C1", "country": "Australia" },
+					{ "id": "C2", "country": "Indonesia" }
+				]
+		},
+	"Main Concerns":
+		[
+			{ "id": "M1", "concern": "Volunteer Numbers", "priority": 1},
+			{ "id": "M2", "concern": "Mental Health Services", "priority": 2},
+			{ "id": "M3", "concern": "Funding", "priority": 3}
+		]
+  }""")
+    with st.expander("Areas of Further Exploration"):
+        st.markdown("With our analysis we saw some areas of further exploration and actions that could be taken to develop the strength of the region.")
+        st.markdown("***")
+        st.markdown("""
+#### Funding Deep Dives
+We've seen some recent work from the Hui E team on exploring funding avenues to explore further. One way to improve those recommendations made (Link found [here](https://www.huie.org.nz/community-funding-white-paper-2022/) would be by identifying key funding surveys in further deep dive surveys. \n 
+By performing a deep dive survey it would allow nuanced understanding of sources and the dynamics at play amongst organisations to understand where the main drivers are for lower revenue/funded organisations to that of larger one's heigtening areas of improvement like knowing what types of organisations get their funding from rather than broader generalisations.""")
+        st.markdown("An example of a funding network deep dive can be show here: https://onlinelibrary.wiley.com/doi/full/10.1002/nml.21426")
+        st.markdown("""
+#### Network Deep Dives
+In the 2021 survey the majority of organisations noted that the networks they developed as a key driver of their future success. One deep dive that could be explored in smaller follow up surveys would be to ask charities of other networks they work with in their region as building up these networks allow for possible cross funding to occur as well as expansion into services performed across region allowing organisations to act as collective units when searching for funding or information.
+This could be done by allowing them to select from a list of registed charities as per the [Charities NZ Website](https://www.charities.govt.nz/charities-in-new-zealand/the-charities-register/open-data/) where they identify all currently reigsted charities in an open manner. Further to this it then can be back-linked to the entity relation diagram produced by Charities NZ allowing for matching data across the different NZ-wide information gathered for further exploration and analysis in the long-run.
+""")
+        st.image("assets/network_analysis_example.jpeg")
+        st.caption("Image Sourced from: https://www.evalacademy.com/articles/social-network-analysis-what-we-learned")
+    with st.expander("Sharing Knowledge"):
+        st.markdown("""
+One large avenue to explore as an area to improve is the access of knowledge of services beyond Government that can support these charitable organisations. \n 
+Through the creation of things like a community dashboard you could possibly provide them knowledge and access to other charities in their regions looking for support or cross-collaboration or services to allow them to grow and access a wider network of technology, services, and people""")
+        st.markdown("An example is shown here below through just a two column system")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("##### Technology to Help")
+            st.markdown(" - https://www.microsoft.com/en-us/microsoft-365/nonprofit")
+        with col2:
+            st.markdown("##### Organisations Helping the Helpers")
+            st.markdown(" - https://www.gooddatainstitute.com/")
+        spacer(2)
+        st.markdown("By providing this knowledge it truly allows for them to feel a renewed sense of community as they recover out of the pandemic but also show that there's others out there looking for help but also willing to help.")
+
+        
 
 def main():
     # base header
@@ -517,10 +619,10 @@ def main():
             """)
         page = st.radio("Select the page you want to explore!", 
                         ['Home', '2020 Summary', '2021 Summary', 'Year-to-Year Comparisons',
-                         'Geographic Analysis','Natural Language Processing','Recommendations'])
+                         'Geographic Analysis','Natural Language Processing','Recommendations & Stories'])
         st.write("_____")
         st.sidebar.write("""
-        Team Members: Matthew, Joyce, Cynthia, Nicolas, & Raul
+        Team Members: Matthew, Joyce, Nicolas, Raul, & Cynthia
         \n Advisors: Shreyank & Shakeel
     _____""")
     
