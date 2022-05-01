@@ -308,7 +308,7 @@ def yearcomparisons():
 
    
 def geographic():
-    st.markdown(" ## Geographic")
+    st.markdown(" ## Geographic Analysis")
     st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
     # define paths to images
