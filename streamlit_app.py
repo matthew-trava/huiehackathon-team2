@@ -266,11 +266,18 @@ def geographic():
     fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
     fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
 
-    # write images
+    # write images with year option
+    gis_option = st.radio("Year", 
+                        ['2020', '2021'])
+
     cols = st.columns(2)
-    cols[0].image(fp_gis_particip_2020)
-    cols[1].image(fp_gis_particip_2021)
-    st.image(fp_gis_gdp_pc, width=700)
+    #st.write("_____")
+    if gis_option == '2020':
+        cols[0].image(fp_gis_particip_2020)
+    elif gis_option == '2021': 
+        cols[0].image(fp_gis_particip_2021)
+    
+    cols[1].image(fp_gis_gdp_pc)
 
     
 
