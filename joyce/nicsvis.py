@@ -91,7 +91,12 @@ def comparison_heatmap(data_path, chart_name, title):
                       plot_bgcolor='rgba(0,0,0,0)',
                       coloraxis={'colorscale': 'BuPu'},
                       height=len(intersection_index) * 40 + 200,
-                      title_text=title,
+                      title={'text':title,'x' : 0},
+                      margin=go.layout.Margin(
+                            l=0, #left margin
+                            r=0, #right margin
+                            pad = 0,
+                        ),
                       yaxis2=dict(anchor='free', position=0.42,
                                   side='right'
                                   ))
@@ -124,5 +129,12 @@ def comparison_gbarchart(data_path, chart_name, title):
     fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',
                       plot_bgcolor='rgba(0,0,0,0)',
                       coloraxis={'colorscale': 'BuPu'},
-                      title_text=title)
+                      height= 600,
+                      title={'text':title,'x' : 0},
+                      margin=go.layout.Margin(
+                            l=0, #left margin
+                            r=0, #right margin
+                            pad = 0,
+                        ),
+                      )
     return(fig)

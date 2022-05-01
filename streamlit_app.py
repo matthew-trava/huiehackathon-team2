@@ -227,43 +227,89 @@ def yearcomparisons():
     st.markdown("#### Changes in Service Delivery Over the Years")
     col1, col2 = st.columns(2)
     st.plotly_chart(comparison_plots("bar_service"), use_container_width=True)
+    st.markdown('<div style="text-align: center">  2020 showed significant cuts, 2021 showed a normal distribution leanign towards increases </div>', unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("staff_service"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Smaller orgs faced the most amount of disruption to services in 2020 </div>',
+        unsafe_allow_html=True)
+
     spacer(2)
     st.plotly_chart(comparison_plots("volunteers_service"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Improvements seen across all volunteer staff sizes </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("income_service"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Cuts to services continue for high income orgs </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("ethnic_service"), use_container_width=True)
+    st.markdown('<div style="text-align: center">  Majority of enthically focused orgs had significant cuts in 2020, strong signs of recovery in 2021 </div>', unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("type_service"), use_container_width=True)
-
-
-
+    st.markdown(
+        '<div style="text-align: center">  Housing and sexual violence services showed significant recovery in 2021 </div>',
+        unsafe_allow_html=True)
 
     st.markdown("#### Funding Reserves Over the Years")
     st.plotly_chart(comparison_plots("bar_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  General shift towards higher funding reserves </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("staff_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Improvements visible across all staff sizes </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("volunteers_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Improvements visible across all volunteer sizes </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("income_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Improvements visible across all volunteer sizes  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("ethnic_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Improvements visible across all ethnic targe orgs  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("type_funding"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Strong negative pattern for sexual health services  </div>',
+        unsafe_allow_html=True)
+    spacer(2)
 
     st.markdown('#### Furthur Comparisons')
     st.plotly_chart(comparison_plots("sector_changes"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Sector changes identified in 2020 largely unchanged  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("service_changes"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Shifting back towards in person services, notable cost increases  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("staff_changes"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Strong staff, volunteer, wage recovery  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("support_accessed"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Strong increase in funding and support services accessed  </div>',
+        unsafe_allow_html=True)
     spacer(2)
     st.plotly_chart(comparison_plots("support_needed"), use_container_width=True)
+    st.markdown(
+        '<div style="text-align: center">  Volunteer needs paritcally satified in 2021, Fundraising, marketing and digital remains critical  </div>',
+        unsafe_allow_html=True)
 
    
 def geographic():
