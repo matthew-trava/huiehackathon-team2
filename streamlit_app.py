@@ -182,8 +182,7 @@ On this page we will explore some basic statistics and interpretations found wit
         components.iframe("https://www.huie.org.nz/our-work/survey-2020/", height = 400, scrolling = True)
     
     with st.expander("Cross Table"):
-        st.markdown("""For options that are a yes or no style response they have been represented by a 1 and 0. A value of 1 indicates that
-    indicates that""")
+        st.markdown("""For options that are a yes or no style response they have been represented by a 1 and 0. A value of 1 indicates that it has been selected, whereas 0 indicates it has not been selected.""")
         column20_1 = st.selectbox("Select the First Column", list(df2020().columns))
         column20_2 = st.selectbox("Select the Second Column", list(df2020().columns))
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
@@ -522,8 +521,16 @@ By exporting the data from the survey collection tool into formats like *JSON* i
 		]
   }""")
     with st.expander("Areas of Further Exploration"):
-        st.markdown("")
-    st.markdown("""""")
+        st.markdown("With our analysis we saw some areas of further exploration and actions that could be taken to develop the strength of the region.")
+        st.markdown("***")
+        st.markdown("""
+#### Funding Deep Dives
+We've seen some recent work from the Hui E team on exploring funding avenues to explore further. One way to improve those recommendations made (Link found [here](https://www.huie.org.nz/community-funding-white-paper-2022/) would be by identifying key funding surveys in further deep dive surveys. \n 
+By performing a deep dive survey it would allow nuanced understanding of sources and the dynamics at play amongst organisations to understand where the main drivers are for lower revenue/funded organisations to that of larger one's heigtening areas of improvement like knowing what types of organisations get their funding from rather than broader generalisations.""")
+        st.markdown("""
+#### Network Deep Dives
+
+""")
 
 def main():
     # base header
