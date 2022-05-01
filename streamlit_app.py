@@ -188,7 +188,9 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
         st.dataframe(crosstab20)
         chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
-        st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
+        st.markdown(f"Chi<sup>2</sup> value= {chi2:.4f} \n\n p-value= {p:.4f} \n\n Degrees of freedom= {dof}", unsafe_allow_html=True)
+        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
+If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent from one another**. An example is the p-value between ethnic-chinese and service delivery affect being 0.954 meaning the two values can be interpreted as independent.""", unsafe_allow_html=True)
    
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
@@ -208,7 +210,10 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab21 = pd.crosstab(df2021()[column21_1], df2021()[column21_2])
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
-        st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
+        st.markdown(f"Chi<sup>2</sup> value= {chi22:.4f} \n\n p-value= {p2:.4f} \n\n Degrees of freedom= {dof2}", unsafe_allow_html=True)
+        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
+If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent**  from one another.""", unsafe_allow_html=True)
+        
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/7939942b-f2b8-4c3c-9944-fb69a2309cd2/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""", unsafe_allow_html=True)
         
@@ -259,6 +264,7 @@ def yearcomparisons():
 def geographic():
     st.markdown(" ## Geographic")
     st.write("coming soon....")
+    
     
 def nlpanalysis():
     st.write("## Natural Language Processing")
@@ -441,7 +447,28 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         
 def recommendations():
     st.markdown("## Recommendations & Stories")
-    st.markdown("""""")
+    st.markdown("""Throughout this hackathon we've seen both interesting stories of perseverance and struggle come from the charities surveyed.\n
+Alongside the stories there are a series of recommendations that we believe could improve the understanding and ecosystem that exists within Aotearoa/New Zealand\n
+***""")
+    st.markdown("#### Stories")
+    st.markdown("""
+Throughout exploring the data we saw stories of struggle and hardship from a series of volunteers with emotions of nervousness, sadness and disappointment as noted through our emotions analysis for the 202o survey. \n 
+Some key quotes we identified were:
+> I'm on heart medication for stress directly related to the effects of Covid and keeping the doors open to meet the needs of our families, stakeholders and staff \n 
+> The stress levels have risen so high and I have been put on Oxygen Therapy to cope in the meantime. \n 
+Alongside these stories from the 2020 Survey we saw signs/signals of recovery from the year-to-year comparison we did but also through the increased levels of optimism and positivity. \n 
+Our year-to-year comparisons painted a picture of opportunity and service and funding recovery. \n
+We not only see renewed confidence throughout the comparisons from the 2020 to the 2021 survey results but could also see this directly through the quotes and words from the survey responders such as:
+> We as an organisation needed to fine tune our direct communication with tangata, in doing so, we realised that us reaching out to tangata fast tracked us to being real and follow through with words into realistic action. Worked hard at assisting people to be supported in their growing independence. We saw people becoming more resilient and self-reliant as a result. Quite a few people are no longer requiring our services as they saw an opportunity to change their lives and thrive by seizing new opportunities such as training and employment. The positive results with some people completely blew us out of the water. I think we have grown as a team and are working with people more dynamically, creatively, flexibly and delivering services to people's individual needs. \n
+
+As a result of these stories we saw opportunities for improvement in services for supporting charity organisations through mental health services as we saw them struggle even during the recovery phases in 2021. \n
+These types of services would allow volunteers and paid staff of charity organisations to better support their patrons and communities of which they serve.""")
+    st.markdown("***")
+    st.markdown("### Recommendations")
+    with st.expander("Data Collection"):
+        st.markdown("""
+
+""")
 
 def main():
     # base header
