@@ -258,7 +258,7 @@ def yearcomparisons():
    
 def geographic():
     st.markdown(" ## Geographic")
-    st.write("coming soon....")
+    st.write("Here we analyse parcipation and its local impact from a geographical point of view")
     
 def nlpanalysis():
     st.write("## Natural Language Processing")
