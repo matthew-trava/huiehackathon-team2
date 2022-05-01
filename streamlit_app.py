@@ -26,6 +26,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import nltk
+from PIL import Image
 @st.cache()
 def nltk_downloads():
     nltk.download('stopwords')
@@ -188,9 +189,7 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
         st.dataframe(crosstab20)
         chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
-        st.markdown(f"Chi<sup>2</sup> value= {chi2:.4f} \n\n p-value= {p:.4f} \n\n Degrees of freedom= {dof}", unsafe_allow_html=True)
-        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
-If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent from one another**. An example is the p-value between ethnic-chinese and service delivery affect being 0.954 meaning the two values can be interpreted as independent.""", unsafe_allow_html=True)
+        st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
    
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
@@ -210,10 +209,7 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab21 = pd.crosstab(df2021()[column21_1], df2021()[column21_2])
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
-        st.markdown(f"Chi<sup>2</sup> value= {chi22:.4f} \n\n p-value= {p2:.4f} \n\n Degrees of freedom= {dof2}", unsafe_allow_html=True)
-        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
-If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent**  from one another.""", unsafe_allow_html=True)
-        
+        st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/7939942b-f2b8-4c3c-9944-fb69a2309cd2/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""", unsafe_allow_html=True)
         
@@ -263,9 +259,27 @@ def yearcomparisons():
    
 def geographic():
     st.markdown(" ## Geographic")
-    st.write("coming soon....")
+    st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
+    # define paths to images
+    fp_gis_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
+    fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
+    fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
+
+    # write images with year option
+    gis_option = st.radio("Year", 
+                        ['2020', '2021'])
+
+    cols = st.columns(2)
+    #st.write("_____")
+    if gis_option == '2020':
+        cols[0].image(fp_gis_particip_2020)
+    elif gis_option == '2021': 
+        cols[0].image(fp_gis_particip_2021)
     
+    cols[1].image(fp_gis_gdp_pc)
+
+
 def nlpanalysis():
     st.write("## Natural Language Processing")
     st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
@@ -447,40 +461,7 @@ A key benefit to understanding emotion is that it conveys more meaning that simp
         
 def recommendations():
     st.markdown("## Recommendations & Stories")
-    st.markdown("""Throughout this hackathon we've seen both interesting stories of perseverance and struggle come from the charities surveyed.\n
-Alongside the stories there are a series of recommendations that we believe could improve the understanding and ecosystem that exists within Aotearoa/New Zealand\n
-***""")
-    st.markdown("#### Stories")
-    st.markdown("""
-Throughout exploring the data we saw stories of struggle and hardship from a series of volunteers with emotions of nervousness, sadness and disappointment as noted through our emotions analysis for the 202o survey. \n 
-Some key quotes we identified were:
-> I'm on heart medication for stress directly related to the effects of Covid and keeping the doors open to meet the needs of our families, stakeholders and staff \n 
-> The stress levels have risen so high and I have been put on Oxygen Therapy to cope in the meantime. \n 
-Alongside these stories from the 2020 Survey we saw signs/signals of recovery from the year-to-year comparison we did but also through the increased levels of optimism and positivity. \n 
-Our year-to-year comparisons painted a picture of opportunity and service and funding recovery. \n
-We not only see renewed confidence throughout the comparisons from the 2020 to the 2021 survey results but could also see this directly through the quotes and words from the survey responders such as:
-> We as an organisation needed to fine tune our direct communication with tangata, in doing so, we realised that us reaching out to tangata fast tracked us to being real and follow through with words into realistic action. Worked hard at assisting people to be supported in their growing independence. We saw people becoming more resilient and self-reliant as a result. Quite a few people are no longer requiring our services as they saw an opportunity to change their lives and thrive by seizing new opportunities such as training and employment. The positive results with some people completely blew us out of the water. I think we have grown as a team and are working with people more dynamically, creatively, flexibly and delivering services to people's individual needs. \n
-
-As a result of these stories we saw opportunities for improvement in services for supporting charity organisations through mental health services as we saw them struggle even during the recovery phases in 2021. \n
-These types of services would allow volunteers and paid staff of charity organisations to better support their patrons and communities of which they serve.""")
-    st.markdown("***")
-    st.markdown("### Recommendations")
-    with st.expander("Data Collection"):
-        st.markdown("""
-As we explored the data we noted some areas that the survey collection process could be streamlined and survey data made more coherent. This includes consistent questions over time, logic within the surveys, and different data export methods. \n 
-*** \n
-#### Consistent Questions Over Time
-By comparing the 2020 to the 2021 survey we noticed that some of the data is inconsistent in terms of the questions asked. This was noticed more closely with the breadth of questions expanding in 2021 to including multi-choice challenges and ongoing concern selection and the geographic data. \n 
-By making the questions the same, or easily comparable, throughout future surveys it will allow for more consistent analysis of changes, improvements, recovery or downfall into the future for these charities. \n
-In particular, the geographic analysis would be more consistent if it was translated into a common set of parameters for the NZ geography in alignment with the NZ Geographic data provided from the Government to allow ease of comparability between density data from NZ such as population densities and GDP densities as well as other quality of life information like crime rates and services in an easy to develop manner with little to no manual data transformation. \n 
-
-#### Logic within the Survey
-Integrating branching and logic within the survey allows for unique understanding to occur. This will also prevent data overlaps from occuring due to clashing questions such as in the example shown below.
-""")
-        st.markdown("""<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerf6-IDaHCzM3Q1FjYJl6z6ab0o_PjiCbHYpAXSCcPh2QLDA/viewform?embedded=true" width="640" height="563" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>""", unsafe_allow_html=True)
-    
-    with st.expander("Areas of Further Exploration"):
-        st.markdown("")
+    st.markdown("""""")
 
 def main():
     # base header
