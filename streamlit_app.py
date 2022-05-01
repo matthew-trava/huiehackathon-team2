@@ -467,8 +467,20 @@ These types of services would allow volunteers and paid staff of charity organis
     st.markdown("### Recommendations")
     with st.expander("Data Collection"):
         st.markdown("""
+As we explored the data we noted some areas that the survey collection process could be streamlined and survey data made more coherent. This includes consistent questions over time, logic within the surveys, and different data export methods. \n 
+*** \n
+#### Consistent Questions Over Time
+By comparing the 2020 to the 2021 survey we noticed that some of the data is inconsistent in terms of the questions asked. This was noticed more closely with the breadth of questions expanding in 2021 to including multi-choice challenges and ongoing concern selection and the geographic data. \n 
+By making the questions the same, or easily comparable, throughout future surveys it will allow for more consistent analysis of changes, improvements, recovery or downfall into the future for these charities. \n
+In particular, the geographic analysis would be more consistent if it was translated into a common set of parameters for the NZ geography in alignment with the NZ Geographic data provided from the Government to allow ease of comparability between density data from NZ such as population densities and GDP densities as well as other quality of life information like crime rates and services in an easy to develop manner with little to no manual data transformation. \n 
 
+#### Logic within the Survey
+Integrating branching and logic within the survey allows for unique understanding to occur. This will also prevent data overlaps from occuring due to clashing questions such as in the example shown below.
 """)
+        st.markdown("""<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSerf6-IDaHCzM3Q1FjYJl6z6ab0o_PjiCbHYpAXSCcPh2QLDA/viewform?embedded=true" width="640" height="563" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>""", unsafe_allow_html=True)
+    
+    with st.expander("Areas of Further Exploration"):
+        st.markdown("")
 
 def main():
     # base header
