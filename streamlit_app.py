@@ -529,8 +529,12 @@ We've seen some recent work from the Hui E team on exploring funding avenues to 
 By performing a deep dive survey it would allow nuanced understanding of sources and the dynamics at play amongst organisations to understand where the main drivers are for lower revenue/funded organisations to that of larger one's heigtening areas of improvement like knowing what types of organisations get their funding from rather than broader generalisations.""")
         st.markdown("""
 #### Network Deep Dives
-
+In the 2021 survey the majority of organisations noted that the networks they developed as a key driver of their future success. One deep dive that could be explored in smaller follow up surveys would be to ask charities of other networks they work with in their region as building up these networks allow for possible cross funding to occur as well as expansion into services performed across region allowing organisations to act as collective units when searching for funding or information.
+This could be done by allowing them to select from a list of registed charities as per the [Charities NZ Website](https://www.charities.govt.nz/charities-in-new-zealand/the-charities-register/open-data/) where they identify all currently reigsted charities in an open manner. Further to this it then can be back-linked to the entity relation diagram produced by Charities NZ allowing for matching data across the different NZ-wide information gathered for further exploration and analysis in the long-run.
 """)
+        st.image("assets/entity_relation_map.jpeg")
+
+        
 
 def main():
     # base header
