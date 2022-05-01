@@ -26,6 +26,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import nltk
+from PIL import Image
 @st.cache()
 def nltk_downloads():
     nltk.download('stopwords')
@@ -188,9 +189,7 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab20 = pd.crosstab(df2020()[column20_1], df2020()[column20_2])
         st.dataframe(crosstab20)
         chi2, p, dof, expected = stats.chi2_contingency(crosstab20)
-        st.markdown(f"Chi<sup>2</sup> value= {chi2:.4f} \n\n p-value= {p:.4f} \n\n Degrees of freedom= {dof}", unsafe_allow_html=True)
-        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
-If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent from one another**. An example is the p-value between ethnic-chinese and service delivery affect being 0.954 meaning the two values can be interpreted as independent.""", unsafe_allow_html=True)
+        st.markdown(f"Chi2 value= {chi2} \n\n p-value= {p} \n\n Degrees of freedom= {dof}")
    
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/49146c74-f1bb-4a5a-b586-c58dbcff11c4/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""",
@@ -210,10 +209,7 @@ On this page we will explore some basic statistics and interpretations found wit
         crosstab21 = pd.crosstab(df2021()[column21_1], df2021()[column21_2])
         st.dataframe(crosstab21)
         chi22, p2, dof2, expected2 = stats.chi2_contingency(crosstab21)
-        st.markdown(f"Chi<sup>2</sup> value= {chi22:.4f} \n\n p-value= {p2:.4f} \n\n Degrees of freedom= {dof2}", unsafe_allow_html=True)
-        st.markdown("""The Chi<sup>2</sup> independence test calculates the independence between two categorical variables (variables that have a finite set of outcomes). \n 
-If the p-value identified is less than a confidence level (let's say 0.05) we can say that the two values are not **independent**  from one another.""", unsafe_allow_html=True)
-        
+        st.markdown(f"Chi2 value= {chi22} \n\n p-value= {p2} \n\n Degrees of freedom= {dof2}")
     st.markdown("*** \n Dashboard")
     st.markdown("""<iframe width="900" height="600" src="https://datastudio.google.com/embed/reporting/7939942b-f2b8-4c3c-9944-fb69a2309cd2/page/fmPrC" frameborder="0" style="border:0" allowfullscreen></iframe>""", unsafe_allow_html=True)
         
@@ -263,9 +259,26 @@ def yearcomparisons():
    
 def geographic():
     st.markdown(" ## Geographic")
-    st.write("coming soon....")
+    st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
+    # define paths to images
+    fp_gis_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
+    fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
+    fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
+
+    # write images with year option
+    gis_option = st.radio("Year", 
+                        ['2020', '2021'])
+
+    cols = st.columns(2)
+    #st.write("_____")
+    if gis_option == '2020':
+        cols[0].image(fp_gis_particip_2020)
+    elif gis_option == '2021': 
+        cols[0].image(fp_gis_particip_2021)
     
+    cols[1].image(fp_gis_gdp_pc)
+
 def nlpanalysis():
     st.write("## Natural Language Processing")
     st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
@@ -510,6 +523,7 @@ By exporting the data from the survey collection tool into formats like *JSON* i
   }""")
     with st.expander("Areas of Further Exploration"):
         st.markdown("")
+    st.markdown("""""")
 
 def main():
     # base header
