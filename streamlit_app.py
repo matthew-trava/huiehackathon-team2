@@ -279,7 +279,6 @@ def geographic():
     
     cols[1].image(fp_gis_gdp_pc)
 
-
 def nlpanalysis():
     st.write("## Natural Language Processing")
     st.write("""Natural language processing (NLP) is an ever growing field of data science as it tries to draw insights and understanding from textual data; the most complex and nuanced type of information we can collect.\n 
