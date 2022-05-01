@@ -262,14 +262,15 @@ def geographic():
     st.write("Here we analyse parcipation and its local impact from a geographical point of view.")
     
     # define paths to images
-    fp_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
+    fp_gis_particip_2020 = 'assets/gis/gis_-_partcipation_2020.png'
     fp_gis_particip_2021 = 'assets/gis/gis_-_partcipation_2021.png'
     fp_gis_gdp_pc = 'assets/gis/gis_-_gdp_percapita.png'
 
     # write images
-    st.image(fp_particip_2020)
-    st.image(fp_gis_particip_2021)
-    st.image(fp_gis_gdp_pc)
+    cols = st.columns(2)
+    cols[0].image(fp_gis_particip_2020)
+    cols[1].image(fp_gis_particip_2021)
+    st.image(fp_gis_gdp_pc, width=700)
 
     
 
